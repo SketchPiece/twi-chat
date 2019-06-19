@@ -1,0 +1,22 @@
+<% layout('layout/page') -%>
+<% block('title', error.message) -%>
+
+<p>Извините, произошла <del>ошибка</del> жопка.</p>
+
+<p><%=error.message%></p>
+
+<img src="/img/404.png" width=1100 height=700>
+<!-- 
+<style>
+        img{
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .errorImg{
+            display: flex;
+        }
+    </style>
+    
+    <div class="errorImg">
+    <img src="/img/derror.png" width="800px" height="600px"> 
+    </div> -->
