@@ -458,8 +458,21 @@
             printMessage('<div class="user_message"><div class="user_ava_conteiner"><div><img class="user_ava" src="https://files.everypony.ru/gallery/random-news-2/d12de1607a.png" alt="avatar" width="70px" height="70px"></div><div class="mess_username">'+username+'</div></div><div class="mess_box"><div class="user_messagebox">'+message+'</div></div></div>');
         }
         slowScroll('#down');
-        // audio.play();
-        // console.log('звук');
+        
+        
+        if(!window_focus){
+            
+            console.log('звук');
+            var promise = audio.play();
+
+if (promise !== undefined) {
+    promise.then(_ => {
+        audio.play();
+    }).catch(error => {
+        console.log('ошба')
+    });
+}
+        }
       })
       .on('leave', function(username) {
         // printStatus(username + " вышел из чата");
