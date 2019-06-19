@@ -411,6 +411,10 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src='/path/to/sails.io.js'></script>
+<script>
+io.sails.transports = ['websocket'];
+</script>
     <script>
   var input = $('#message_input');
   var all_mess = $('#all_mess');
@@ -418,7 +422,9 @@
   var users = $('#users');
   var user;
 
-  var socket = io.connect();
+  var socket = io.connect('', {
+    reconnect: false
+  });
 
     // var timerId = setInterval(function() {
     //     socket.emit('update online');
