@@ -87,7 +87,7 @@ const checkAuth = (handshake, callback) => {
 
 const socket = (server) => {
     const io = require('socket.io')(server, {
-        'origins': ['127.0.0.1:*', 'localhost:*']
+        'origins': ['*:*', '*:*']
     });
 
     io.use((socket, next) => {
