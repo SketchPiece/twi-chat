@@ -5,6 +5,8 @@ var config = require('./config/config.json')
 var HttpError = require('./error').HttpError;
 // var mongoose = require('./libs/mongoose');
 
+config.port = process.env.PORT || 3000;
+
 var app = express();
 app.set('port', config.port);
 
