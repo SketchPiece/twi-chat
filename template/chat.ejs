@@ -401,9 +401,10 @@
         </div>
     </div>
     <!-- Подключаем jQuery, а также Socket.io -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -411,12 +412,33 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+
+
+
     <script>
   var input = $('#message_input');
   var all_mess = $('#all_mess');
   var form = $('#messForm');
   var users = $('#users');
   var user;
+
+    function slowScroll(id) {
+            var offset = 0;
+            $('#mess_container').animate({
+                scrollTop: $(id).offset().top - offset
+            }, 500);
+            return false;
+        }
+
+    var window_focus = true;
+        window.onblur = function () {
+            window_focus = false;
+            console.log('фокус ушел');
+        }
+        $(window).focus(function () {
+            window_focus = true;
+            console.log("фокус пришел");
+        });
 
   var socket = io.connect('', {
     reconnect: false
@@ -432,8 +454,9 @@
         if(username == user){
             printMessage('<div class="my_message"><div class="my_messagebox">'+message+'</div></div>');
         }else{
-            printMessage('<div class="user_message"><div class="user_ava_conteiner"><div><img class="user_ava" src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/95cc784b-7df7-458d-9207-5f18a5ca3224/d6mfxcq-6e81c18d-57fa-4881-902b-e029a16d3418.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzk1Y2M3ODRiLTdkZjctNDU4ZC05MjA3LTVmMThhNWNhMzIyNFwvZDZtZnhjcS02ZTgxYzE4ZC01N2ZhLTQ4ODEtOTAyYi1lMDI5YTE2ZDM0MTgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.Q86lQrKQk9A_WOltQrOogwp0Ba4DHiTOA6KtXEs_yoY" alt="avatar" width="70px" height="70px"></div><div class="mess_username">'+username+'</div></div><div class="mess_box"><div class="user_messagebox">'+message+'</div></div></div>');
+            printMessage('<div class="user_message"><div class="user_ava_conteiner"><div><img class="user_ava" src="https://files.everypony.ru/gallery/random-news-2/d12de1607a.png" alt="avatar" width="70px" height="70px"></div><div class="mess_username">'+username+'</div></div><div class="mess_box"><div class="user_messagebox">'+message+'</div></div></div>');
         }
+        slowScroll('#down');
       })
       .on('leave', function(username) {
         // printStatus(username + " вышел из чата");
@@ -502,11 +525,17 @@
         return Object.keys(obj); // или собрать ключи перебором для IE8-
     }
   function sendMessage() {
+    if(input.val()){
     var text = input.val();
     socket.emit('message', text);
 
     input.val('');
     return false;
+    }
+    else{
+        alert('Пожалуйста, не отправляйте пустые сообщения!')
+        return false;
+    }
   }
 
   function printStatus(status) {
