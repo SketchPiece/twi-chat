@@ -418,9 +418,7 @@
   var users = $('#users');
   var user;
 
-  var socket = io.connect('', {
-    reconnect: false
-  });
+  var socket = io.connect();
 
     // var timerId = setInterval(function() {
     //     socket.emit('update online');
