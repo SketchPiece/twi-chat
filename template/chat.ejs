@@ -344,7 +344,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
-            <h3>TwiChat v0.4.2</h3>
+            <h3>TwiChat v0.4.3</h3>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -538,6 +538,10 @@ if (promise !== undefined) {
 
 
     function addMessage(username, message){
+        console.log(message);
+        message = message.replace(new RegExp("<",'g'),"&lt;")
+        message = message.replace(new RegExp(">",'g'),"&gt;")
+        console.log(message);
         if(username == user){
             printMessage('<div class="my_message"><div class="my_messagebox">'+message+'</div></div>');
         }else{
