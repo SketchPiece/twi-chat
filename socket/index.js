@@ -4,6 +4,7 @@ const sessionStore = require('../libs/sessionStore');
 const cookie = require('cookie');
 const cookieParser = require('cookie-parser');
 const User = require('../models/user').User;
+const Message = require('../models/chat').Message;
 // const debug = require('debug')('webchat:socketio');
 
 // function updateClients(io, socket, onlineUsers) {
@@ -187,6 +188,11 @@ const socket = (server) => {
         const username = socket.handshake.user.get('username');
         // console.log(onlineUsers.indexOf(username))
         onlineUsers.push(username);
+        var query = Message.find({});
+        query.sort('-created').limit(500).exec(function(err, docs) {
+            if (err) throw err;
+            socket.emit('load msgs', docs);
+        });
 
         // console.log(onlineUsers.indexOf(username))
         // consolse.log('------------------------------connnnnnnnnnnnnect');
@@ -206,8 +212,12 @@ const socket = (server) => {
         socket.emit('join', username);
 
         socket.on('message', (text, callback) => {
-            io.sockets.emit('message', username, text);
-            // callback && callback(text);
+            var newMsg = new Message({ nickname: username, msg: text })
+            newMsg.save(function(err) {
+                    if (err) throw err;
+                    io.sockets.emit('message', username, text);
+                })
+                // callback && callback(text);
         });
 
         socket.on('disconnect', () => {
