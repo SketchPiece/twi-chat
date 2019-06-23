@@ -541,6 +541,8 @@ if (promise !== undefined) {
         console.log(message);
         message = message.replace(new RegExp("<",'g'),"&lt;")
         message = message.replace(new RegExp(">",'g'),"&gt;")
+        username = username.replace(new RegExp("<",'g'),"&lt;");
+        username = username.replace(new RegExp(">",'g'),"&gt;");
         console.log(message);
         if(username == user){
             printMessage('<div class="my_message"><div class="my_messagebox">'+message+'</div></div>');
