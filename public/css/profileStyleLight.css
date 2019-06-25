@@ -1,0 +1,66 @@
+.user_ava {
+    border-radius: 25%;
+}
+
+.profile {
+    margin-top: 15px;
+}
+
+.username {
+    color: black;
+}
+
+.avatar_con {
+    display: flex;
+    flex-direction: column;
+    /* margin-left: auto; */
+}
+
+.new-avatar {
+    margin-top: 20px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.DarkChat {
+    background: #ffffff;
+    color: #000000;
+    /* box-shadow: 0px 4px 8px 8px rgba(0, 0, 0, 0.19); */
+}
+
+.navbar-brand {
+    color: #000000;
+    transition: 0.2s;
+}
+
+.navbar-brand:hover {
+    color: #adadad;
+    transition: 0.2s;
+}
+
+.nav-link {
+    color: #000000;
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    color: #adadad;
+    transition: 0.2s;
+}
+
+.Celestia {
+    background: url(https://media.discordapp.net/attachments/586999639992041473/592425330481037338/11111.png);
+    background-size: 100%;
+    width: 106px;
+    height: 106px;
+}
+
+.Luna {
+    background: url(https://media.discordapp.net/attachments/586999639992041473/592425333966241812/222222122.png);
+    background-size: 100%;
+    width: 106px;
+    height: 106px;
+}
