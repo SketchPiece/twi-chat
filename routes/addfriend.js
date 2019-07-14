@@ -1,5 +1,6 @@
 var User = require('../models/user').User;
 var FriendRequest = require('../models/friendReq').FriendRequest;
+var HttpError = require('../error').HttpError;
 
 exports.post = async function(req,res,next){
     var reqId = req.query.id + '/' + req.session.user;
