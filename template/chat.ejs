@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <title>TwiChat</title>
+    <% if(theme=='light'){ %>
+    <link rel="stylesheet" href="/css/chatStyleLight.css">
+    <% } else { %>
+    <link rel="stylesheet" href="/css/chatStyleDark.css">
+    <% } %>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg DarkChat">
+        <a class="navbar-brand" href="/">
+            <h3>TwiChat v0.6</h3>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+            aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link ml-2" href="/profile">
+                        <h5>Профиль</h5>
+                    </a>
+                </li>
+            </ul>
+            <form action="/logout" class="form-inline my-2 my-lg-0">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Выйти</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="chatbox">
+        <div class="container-fluid">
+            <div class="row messBox">
+                <div class="mess_col">
+
+                    <!-- Вывод всех сообщений будет здесь -->
+                    <div id="mess_container">
+                        <h3>Начало чата...</h3>
+                        <div id="all_mess">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="typing" id="type"></div>
+
+                <div class="form-mess">
+                    <!-- Форма для получения сообщений и имени -->
+                    <form id="messForm">
+                        <div class="row">
+                            <% if(theme=='light'){ %>
+                            <style>
+                                .form-control::-webkit-input-placeholder {
+                                    color: #5a5a5a;
+                                    opacity: 1;
+                                }
+
+                                /* webkit */
+                                .form-control::-moz-placeholder {
+                                    color: #5a5a5a;
+                                    opacity: 1;
+                                }
+
+                                /* Firefox 19+ */
+                                .form-control:-moz-placeholder {
+                                    color: #5a5a5a;
+                                    opacity: 1;
+                                }
+
+                                /* Firefox 18- */
+                                .form-control:-ms-input-placeholder {
+                                    color: #5a5a5a;
+                                    opacity: 1;
+                                }
+
+                                /* IE */
+                            </style>
+
+                            <div class="col-lg-11 col-md-10 col-sm-10 col-8"><input enabled class="form-control"
+                                    autocomplete="off" autofocus placeholder="Сообщение..." id="message_input"
+                                    style="padding-left:12px;background: #ffffff;border: 1px #989898 solid;box-shadow: inset 0px 0px 1px 0px rgba(0,0,0,0.75);">
+                            </div>
+                            <div class="col col-md-1 col-sm-1 col-1"><button class="btn button-send">➤</button></div>
+                            <% } else { %>
+                            <style>
+                                .form-control::-webkit-input-placeholder {
+                                    color: rgba(255, 255, 255, 0.19);
+                                    opacity: 1;
+                                }
+
+                                /* webkit */
+                                .form-control::-moz-placeholder {
+                                    color: rgba(255, 255, 255, 0.19);
+                                    opacity: 1;
+                                }
+
+                                /* Firefox 19+ */
+                                .form-control:-moz-placeholder {
+                                    color: rgba(255, 255, 255, 0.19);
+                                    opacity: 1;
+                                }
+
+                                /* Firefox 18- */
+                                .form-control:-ms-input-placeholder {
+                                    color: rgba(255, 255, 255, 0.19);
+                                    opacity: 1;
+                                }
+
+                                /* IE */
+                            </style>
+                            <div class="col-lg-11 col-md-10 col-sm-10 col-8"><input enabled class="form-control"
+                                    autocomplete="off" autofocus placeholder="Сообщение..." id="message_input"
+                                    style="padding-left:12px;background: #262626;border: 1px #989898 solid;box-shadow: inset 0px 0px 7px 3px rgba(0,0,0,0.75);">
+                            </div>
+                            <div class="col col-md-1 col-sm-1 col-1"><button class="btn button-send">➤</button></div>
+                            <% } %>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="online_column">
+        <div class="main_chat"><h4 class="main_name">Общий</h4></div>
+        <div id="directs">
+            
+        </div>
+    </div>
+    <!-- Подключаем jQuery, а также Socket.io -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+
+
+
+    <script>
+        var input = $('#message_input');
+        var all_mess = $('#all_mess');
+        var form = $('#messForm');
+        var users = $('#directs');
+        var user;
+        var type = $('#type');
+        let inputType = document.getElementById("message_input");
+        let audio = new Audio('/audio/notif.mp3');
+
+
+
+        function slowScroll() {
+            // var offset = 0;
+            // $('#mess_container').animate({
+            //     scrollTop: $(id).offset().top - offset
+            // }, 60);
+            // $('#mess_container').animate({scrollTop:$(id).offset().top+"px"},{duration:1E3});
+            // return false;
+            $('#mess_container').stop().animate({
+                scrollTop: $('#mess_container')[0].scrollHeight
+            }, 800);
+        }
+
+        var window_focus = true;
+        window.onblur = function () {
+            window_focus = false;
+            // console.log('фокус ушел');
+            // console.log($("#mess_container")[0].scrollHeight);//clientHeight
+            // console.log(Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height()));
+            // console.log($("#mess_container").scrollTop());
+
+
+        }
+        $(window).focus(function () {
+            window_focus = true;
+            // console.log("фокус пришел");
+        });
+
+        var socket = io.connect('', {
+            reconnect: false
+        });
+
+        // var timerId = setInterval(function() {
+        //     socket.emit('update online');
+        // }, 2000);
+
+        function playSound(){
+            var promise = audio.play();
+
+                    if (promise !== undefined) {
+                        promise.then(_ => {
+                            audio.play();
+                        }).catch(error => {
+                            console.log(error);
+                            console.log('ошба');
+                        });
+                    }
+        }
+
+        socket
+            .on('message accept', function (username, message, id) {
+                // console.log(user)
+                if (Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height()) == Math.round($("#mess_container").scrollTop())) {
+                    slowScroll();
+                }
+                addMessage(username, message, id);
+                // slowScroll();
+
+
+
+                if (!window_focus) {
+
+                    // console.log('звук');
+                    playSound();
+                }
+            })
+            .on('leave', function (username) {
+                // printStatus(username + " вышел из чата");
+                // socket.emit('update online');
+            })
+            .on('join', function (username) {
+                // printStatus(username + " вошёл в чат");
+                // socket.emit('update online');
+                // console.log(username);
+                user = username;
+                // console.log(user)
+            })
+            .on('connect', function () {
+                // printStatus("соединение установлено");
+                form.on('submit', sendMessage);
+                input.prop('disabled', false);
+                socket.emit('update chats');
+            })
+            .on('disconnect', function () {
+                // printStatus("соединение потеряно");
+                form.off('submit', sendMessage);
+                input.prop('disabled', true);
+                // this.$emit('error');
+                type.text('Соединение потеряно...');
+            })
+            .on('logout', function () {
+                location.href = "/";
+            })
+            .on('push chats', function (Chats) {
+                // Chats = unique(Chats);
+                var html = '';
+                for (var i = 0; i < Chats.length; i++) {
+                    if(Chats[i].new=='1'){
+                        html +=
+                        '<a style="text-decoration: none;" href="direct?id='+Chats[i].id+'"><div class="online_user"><img class="user_ava ava_online hovergif" src="/image/' + Chats[i].id + '" alt="avatar" width="60px" height="60px"><h4 class="online_name">' +
+                        Chats[i].username +' (!)'+ '</h4></div></a>';
+                    }else{
+                        html +=
+                        '<a style="text-decoration: none;" href="direct?id='+Chats[i].id+'"><div class="online_user"><img class="user_ava ava_online hovergif" src="/image/' + Chats[i].id + '" alt="avatar" width="60px" height="60px"><h4 class="online_name">' +
+                        Chats[i].username + '</h4></div></a>';
+                    }
+                    
+                }
+                users.html(html);
+
+            })
+            .on('error', function (reason) {
+                if (reason == "handshake unauthorized") {
+                    //   printStatus("вы вышли из сайта");
+                } else {
+                    setTimeout(function () {
+                        socket.socket.connect();
+                    }, 500);
+                }
+            })
+            .on('load msgs', function (docs) {
+                //   console.log('load');
+                for (var i = docs.length - 1; i >= 0; i--) {
+                    // console.log(docs[i]);
+                    addMessage(docs[i].nickname, docs[i].msg, docs[i].id);
+                }
+                $("#mess_container").scrollTop($("#mess_container")[0].scrollHeight);
+            }).on('private mess send', function(docs){
+                socket.emit('update chats');
+                playSound();
+                // console.log('ошибка');
+            }).on('notifOnType', function(typeUsers){
+                // console.log(typeUsers);
+                // console.log(typeUsers.indexOf(user));
+                if(typeUsers.indexOf(user)>-1){
+                    // console.log(typeUsers);
+                    // console.log(typeUsers.indexOf(user));
+                    typeUsers.splice(typeUsers.indexOf(user), 1);
+                    // console.log(typeUsers2);
+                }
+                
+                if(typeUsers.length<=0){
+                    type.text('');
+                }
+                else if(typeUsers.length==1){
+                    type.text(typeUsers[0]+' кастует...');
+                }
+                else if(typeUsers.length==2){
+                    type.text(typeUsers[0]+' и '+ typeUsers[1] + ' кастуют...');
+                }
+                else if(typeUsers.length==3){
+                    type.text(typeUsers[0]+', '+ typeUsers[1] + ' и ' + typeUsers[2] + ' кастуют...');
+                }
+                else{
+                    type.text('Кастуется мегазаклинание...');
+                }
+                // type.text(doc.user + ' пишет..');
+            }).on('notifOffType', function(typeUsers){
+                if(typeUsers.indexOf(user)>-1){
+                    typeUsers.splice(typeUsers.indexOf(user), 1);
+                    // typeUsers = typeUsers.splice(typeUsers.indexOf(user), 1);
+                }
+
+                if(typeUsers.length<=0){
+                    type.text('');
+                }
+                else if(typeUsers.length==1){
+                    type.text(typeUsers[0]+' кастует...');
+                }
+                else if(typeUsers.length==2){
+                    type.text(typeUsers[0]+' и '+ typeUsers[1] + ' кастуют...');
+                }
+                else if(typeUsers.length==3){
+                    type.text(typeUsers[0]+', '+ typeUsers[1] + ' и ' + typeUsers[2] + ' кастуют...');
+                }
+                else{
+                    type.text('Кастуется мегазаклинание...');
+                }
+            });
+
+
+
+        function checkMessage(msg) {
+            msg = msg.replace(new RegExp("<", 'g'), "&lt;");
+            msg = msg.replace(new RegExp(">", 'g'), "&gt;");
+
+            //ссылки [https:\/\/|http:\/\/]\S[^\s]*\S
+
+            if (msg.match(/https:\/\/\S[^\s]*\S/)) {
+                var cut = msg.match(/https:\/\/\S[^\s]*\S/)[0];
+                // cut = cut.replace(/\*\*/g, '');
+                
+                msg = msg.replace(/https:\/\/\S[^\s]*\S/, '<a href="'+cut+'">' + cut + '</a>');
+            }
+
+            while (msg.match(/\*\*\S[^\*\*]*\S\*\*/)) {
+                var cut = msg.match(/\*\*\S[^\*\*]*\S\*\*/)[0];
+                cut = cut.replace(/\*\*/g, '');
+                msg = msg.replace(/\*\*\S[^\*\*]*\S\*\*/, '<b>' + cut + '</b>');
+            }
+            
+            while (msg.match(/\*\S[^\*]*\S\*/)) {
+                var cut = msg.match(/\*\S[^\*]*\S\*/)[0];
+                cut = cut.replace(/\*/g, '');
+                msg = msg.replace(/\*\S[^\*]*\S\*/, '<i>' + cut + '</i>');
+            }
+            while (msg.match(/-\S[^-]*\S-/)) {
+                var cut = msg.match(/-\S[^-]*\S-/)[0];
+                cut = cut.replace(/-/g, '');
+                msg = msg.replace(/-\S[^-]*\S-/, '<s>' + cut + '</s>');
+            }
+            while (msg.match(/_\S[^_]*\S_/)) {
+                var cut = msg.match(/_\S[^_]*\S_/)[0];
+                cut = cut.replace(/_/g, '');
+                msg = msg.replace(/_\S[^_]*\S_/, '<u>' + cut + '</u>');
+            }
+            while (msg.match(/~\S[^~]*\S~/)) {
+                var cut = msg.match(/~\S[^~]*\S~/)[0];
+                cut = cut.replace(/~/g, '');
+                msg = msg.replace(/~\S[^~]*\S~/, '<div style="transform: rotate(180deg);">' + cut + '</div>');
+            }
+            while (msg.match(/#\S[^#]*\S#/)) {
+                var cut = msg.match(/#\S[^#]*\S#/)[0];
+                cut = cut.replace(/#/g, '');
+                msg = msg.replace(/#\S[^#]*\S#/, '<h1>' + cut + '</h1>');
+            }
+
+            return msg;
+        }
+
+
+        function addMessage(username, message, id) {
+
+
+            message = checkMessage(message);
+
+            username = username.replace(new RegExp("<", 'g'), "&lt;");
+            username = username.replace(new RegExp(">", 'g'), "&gt;");
+            // console.log(username);
+
+            if (username == user) {
+                printMessage('<div class="my_message"><div class="my_messagebox">' + message + '</div></div>');
+            } else {
+                printMessage(
+                    '<div class="user_message"><div class="user_ava_conteiner"><div><a href="/profile?id='+id+'"><img class="user_ava" src="/image/'+id+'" alt="avatar" width="70px" height="70px"></a></div><div class="mess_username"><a class="profileLink" href="/profile?id='+id+'">' +
+                    username + '</a></div></div><div class="mess_box"><div class="user_messagebox">' + message +
+                    '</div></div></div>');
+            }
+        };
+
+
+
+        function unique(arr) {
+            var test = []
+            var result = [];
+
+            nextInput:
+                for (var i = 0; i < arr.length; i++) {
+                    var strtest = JSON.stringify(arr[i]); // для каждого элемента
+                    var str = arr[i];
+                    for (var j = 0; j < test.length; j++) { // ищем, был ли он уже?
+                        if (test[j] == strtest) continue nextInput; // если да, то следующий
+                    }
+                    test.push(strtest);
+                    result.push(str);
+                }
+
+            return result;
+        }
+
+        function sendMessage() {
+            var text = input.val();
+            text = text.replace(/ /g, '');
+            socket.emit("offTyping", user);
+            if (text | text !== '') {
+
+                socket.emit('message send', text);
+
+                input.val('');
+                slowScroll();
+                //скролл
+                return false;
+            } else {
+                // alert('Пожалуйста, не отправляйте пустые сообщения!')
+                return false;
+            }
+        }
+
+        function printStatus(status) {
+            all_mess.append(status);
+            // $('<li>').append($('<i>').text(status)).appendTo(ul);
+        }
+
+        function printMessage(text) {
+            all_mess.append(text);
+            // $('<li>').text(text).appendTo(ul);
+        }
+
+        //setup before functions
+        var typingTimer;                //timer identifier
+        var doneTypingInterval = 3000;  //time in ms, 5 second for example
+
+        input.on('keyup', function () {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+
+        input.on('keydown', function () {
+            // console.log('Пишет')
+            socket.emit("onTyping", user);
+            clearTimeout(typingTimer);
+        });
+
+        function doneTyping () {
+            // console.log('опа, не пишет')
+            socket.emit("offTyping", user);
+        }
+        
+    </script>
+</body>
+
+</html>

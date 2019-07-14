@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Профиль</title>
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <% if(theme=='light'){ %>
+    <link rel="stylesheet" href="/css/profileStyleLight.css">
+    <% } else { %>
+    <link rel="stylesheet" href="/css/profileStyleDark.css">
+    <% } %>
+
+    <!-- <link rel="stylesheet" href="/css/mainStyle.css" /> -->
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg DarkChat">
+            <a class="navbar-brand" href="/">
+                <h3>TwiChat v0.6</h3>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link ml-2" href="/profile">
+                            <h5>Профиль</h5>
+                        </a>
+                    </li>
+                </ul>
+                <form action="/logout" class="form-inline my-2 my-lg-0">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Выйти</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="row profile">
+            <div class="col-lg-4 col-md-5 col-sm-6 col-6">
+                <div class="avatar_con">
+                    <img class="user_ava" src="/image/<%= user._id %>" alt="avatar" width="256" height="256">
+
+
+                    <form action="/upload" method="POST" enctype="multipart/form-data">
+                        <div class="custom-file mb-3">
+                            <div class="new-avatar">
+                                <input type="file" name="file" id="file">
+                                <!-- <label for="file" class="custom-file-label">Выберите файл</label> -->
+                                <input type="submit" value="Установить" class="btn btn-primary btn-block">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="col-4 col-sm-2 info">
+                <h1 class="username"><%= user.username %></h1>
+                <h2>Кому Вы поклоняетесь?</h2>
+                <div class="btn-group">
+                    <form  method="POST" action="/light">
+                        <button type="submit" class="btn btn-outline-light Celestia">Принцесса Селестия</button>
+                    </form>
+                    <form  method="POST" action="/dark">
+                        <button type="submit" class="btn btn-outline-dark Luna">Принцесса Луна</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <div class="col friends">
+            <h4 class='friends'>Друзья</h4>
+            <div class="friends-wrapper">
+                <% if(friends.length<1) {%>
+                    <h3>У вас нет друзей :,(</h3>
+                <% } %>
+                <% for(var i=0; i<friends.length;i++) { %>
+                    <a style="text-decoration: none;" href="profile?id=<%= friends[i].id %>"><div class="online_user"><img class="user_ava ava_online hovergif" src="/image/<%= friends[i].id %>" alt="avatar" width="60px" height="60px"><h4 class="online_name"><%= friends[i].username%></h4></div></a>
+                <% } %>
+            </div>
+            </div>
+
+            <div class="friendReqWrapper">
+                <% if(requests.length>0){ %>
+                    <h4>Хотите добавить этих людей в друзья?</h4>
+                    <% for(var i = 0; i < requests.length; i++) { %>
+                        <div class="friendReq">
+                        <h5><%= requests[i].requesterName %></h5>
+                        <form action="/acceptfreandship?reqid=<%= requests[i].requester +'/'+ user._id %>" method="POST">
+                                <button type="submit" class="btn btn-success">Да</button>
+                        </form>
+                        <form action="/refusefreandship?reqid=<%= requests[i].requester +'/'+ user._id %>" method="POST">
+                                <button type="submit" class="btn btn-danger">Отклонить</button>
+                        </form>
+                        
+                    </div>
+                    <% } %>
+                <% } %>
+            </div>
+    
+        </div>
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+</body>
+
+</html>

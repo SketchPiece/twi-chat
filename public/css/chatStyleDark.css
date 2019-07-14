@@ -1,0 +1,463 @@
+/* * {
+            border-radius: 5px;
+        } */
+
+
+/* .image {
+            width: 100px;
+            height: 100px;
+        } */
+
+
+/* #down {
+            height: 10px;
+        } */
+* {
+    color: white;
+}
+
+.profileLink {
+    color: white;
+    /* transition: 0.3s; */
+}
+
+.profileLink:hover {
+    color: white;
+}
+
+.ava_online {
+    margin: 10px;
+}
+
+.mess_box {
+    display: flex;
+}
+
+#users {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.online_user {
+    width: 100%;
+    min-height: 50px;
+    background-color: #202020;
+    /* border-radius: 10px; */
+    display: flex;
+    text-align: center;
+    /* margin-top: 10px; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    min-width: 80px;
+    color: #ffffff;
+    box-shadow: inset 0px 0px 14px 1px rgba(0, 0, 0, 0.75);
+    text-decoration: none;
+    transition: 0.2s;
+}
+.online_user:hover{
+    box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.75);
+}
+/* .online_user h4:hover{
+    
+    color: white;
+} */
+.current_user{
+    width: 100%;
+    min-height: 50px;
+    background-color: #202020;
+    /* border-radius: 10px; */
+    display: flex;
+    text-align: center;
+    /* margin-top: 10px; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    min-width: 80px;
+    color: #ffffff;
+    /* box-shadow: inset 0px 0px 14px 1px rgba(0, 0, 0, 0.75); */
+    text-decoration: none;
+}
+
+.main_chat{
+    width: 100%;
+    min-height: 50px;
+    background-color: #202020;
+    /* border-radius: 10px; */
+    display: flex;
+    text-align: center;
+    /* margin-top: 10px; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    min-width: 80px;
+    color: #ffffff;
+    /* box-shadow: inset 0px 0px 14px 1px rgba(0, 0, 0, 0.75); */
+    text-decoration: none;
+}
+.main_name{
+    margin: auto;
+}
+
+.online_name {
+    margin: auto;
+    padding-right: 10%;
+}
+
+.down,
+.push {
+    height: 50px;
+}
+
+
+/* .down{
+            margin-top: 10px;
+        } */
+
+.user_ava_conteiner {
+    /* width: 80%; */
+    display: flex;
+    align-items: flex-end;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.user_ava {
+    border-radius: 25%;
+    transition: 0.3s;
+}
+
+.user_ava:hover {
+    opacity: 0.5;
+}
+
+.user_messagebox {
+    min-width: 100px;
+    min-height: 35px;
+    /* max-width: 10%; */
+    background-color: #313131;
+    border-radius: 5px 30px 30px 30px;
+    /* padding: 10px; */
+    text-align: center;
+    margin-left: 15px;
+    margin-top: 5px;
+    padding: 10px;
+    display: table-cell;
+    vertical-align: middle;
+    padding-right: 15px;
+    /* vertical-align: middle */
+    word-wrap: break-word;
+}
+
+.user_message {
+    margin-top: 5px;
+}
+
+.my_message {
+    margin-top: 5px;
+    /* min-height: 45px; */
+    /* display: flex; */
+    /* background: black; */
+    /* color: white; */
+    padding: 10px;
+    overflow: hidden;
+}
+
+.my_messagebox {
+    min-width: 100px;
+    min-height: 35px;
+    max-width: 95%;
+    background-color: #505050;
+    border-radius: 30px 30px 5px 30px;
+    /* padding: 10px; */
+    text-align: center;
+    margin-left: 15px;
+    padding: 10px;
+    display: table-cell;
+    vertical-align: middle;
+    float: right;
+    margin-right: 10px;
+    word-wrap: break-word;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+.form {
+    text-align: center;
+    max-height: 10%;
+    /* position: fixed; */
+    /* max-width: 0%; */
+}
+
+.form-control {
+    padding: unset;
+}
+
+.col-10 {
+    /* padding: ; */
+    /* padding-left: 10px; */
+}
+
+.col {
+    padding: unset;
+}
+
+.container-fluid {
+    height: 90%;
+}
+
+#mess_container {
+    min-height: 100%;
+    /* border: black solid;  */
+    overflow-y: scroll;
+    /* height: 100%; */
+    /* background-color: rgb(255, 255, 255, 0.8); */
+    /* margin-bottom: 10px; */
+}
+
+.mess_col {
+    width: 100%;
+    /* border: rgb(158, 158, 158) solid; */
+    /* border-radius: 10px; */
+    height: 113%;
+    /* margin-bottom: 15px; */
+}
+
+.form-mess {
+    width: 100%;
+}
+
+.messBox {
+    height: 90%;
+}
+
+.header_clip {
+    position: fixed;
+    width: 100%;
+    /* transform: translateY(-523px) */
+    /* background-color: rgb(0, 0, 0); */
+}
+
+
+/* -----========== Жежа ==========---- */
+
+
+/* .m_menu {
+            width: 100%;
+            height: 90px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            background-color: rgb(230, 230, 230, 0.7);
+        } */
+
+
+/* .avatar {
+            background: url(img/penki.png);
+            background-size: 100%;
+            margin-left: 20px;
+            margin-top: 20px;
+            width: 100px;
+            height: 100px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 50px;
+            float: left;
+        } */
+
+
+/* .userinfo {
+            width: 100%;
+            float: left;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+            background-color: rgb(255, 255, 255, 0.6);
+        }
+
+        .username {
+            margin-left: 10px;
+            margin-top: 30px;
+            margin-right: 10px;
+            width: 50%;
+            height: 100px;
+            float: left;
+            text-align: center;
+        } */
+
+.chatbox {
+    background-color: #151515;
+    width: 80%;
+    height: 90%;
+    float: left;
+    /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5); */
+    border-radius: 0;
+    padding-left: 10px;
+}
+
+.online_column {
+    /* display: inline-table; */
+    padding: 0px;
+    width: 20%;
+    height: 91%;
+    float: left;
+    /* box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5); */
+    /* background-color: rgb(255, 255, 255, 0.3); */
+    /* border-radius: 0; */
+    /* padding-top: 10px; */
+    color: #ffffff;
+    background-color: #252525;
+    overflow-y: scroll;
+    overflow: auto;
+}
+
+
+#mess_container {
+    width: 100%;
+    /* border: black solid;  */
+    overflow-y: scroll;
+    height: 100%;
+    color: #ffffff
+}
+
+
+/* .option {
+            margin-top: 10px;
+        } */
+
+
+/* #css_bg {
+            width: 100%;
+        } */
+
+
+/* .b {
+            margin-top: 10px;
+        } */
+
+
+/* скролл бар */
+
+ ::-webkit-scrollbar {
+    width: 8px;
+    /* border-radius: 50%; */
+}
+
+ ::-webkit-scrollbar-thumb {
+    border-width: 1px 1px 1px 2px;
+    border-color: #777;
+    background-color: #aaa;
+}
+
+ ::-webkit-scrollbar-thumb:hover {
+    border-width: 1px 1px 1px 2px;
+    border-color: #555;
+    background-color: #777;
+}
+
+ ::-webkit-scrollbar-track {
+    border-width: 0;
+}
+
+ ::-webkit-scrollbar-track:hover {
+    border-left: solid 1px #aaa;
+    background-color: #eee;
+}
+
+
+/* скролл бар */
+
+.login {
+    align-self: center;
+    width: 400px;
+    height: 210px;
+    margin: 100px auto 0;
+    background-color: rgb(230, 230, 230, 0.7);
+}
+
+.login h3 {
+    width: 100%;
+    text-align: center;
+    line-height: unset;
+}
+
+.login input {
+    width: 98%;
+    margin-left: 8px;
+}
+
+
+/* #chatArea {
+            display: none;
+        }
+
+        #loginArea {
+            /* display: none; */
+
+
+/* } */
+
+
+
+/*ТЕМНАЯ ТЕМА И ДРУГИЕ ИЗМЕНЕНИЯ*/
+
+.DarkChat {
+    background: #393939;
+    color: #ffffff;
+}
+
+.button-send {
+    background: #2e2e2e;
+    color: #ffffff;
+}
+
+.button-send:hover {
+    background: #c4c4c4;
+    color: #1c1c1c;
+}
+
+.nav-link {
+    color: #ffffff;
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    color: #adadad;
+    transition: 0.2s;
+}
+
+.navbar-brand {
+    color: #ffffff;
+    transition: 0.2s;
+}
+
+.navbar-brand:hover {
+    color: #adadad;
+    transition: 0.2s;
+}
+
+body {
+    background: #151515;
+}
+
+.mess_username {
+    font-size: 16pt;
+}
+
+.form-control {
+    padding-left: 12px;
+    background: #262626;
+    border: 1px #989898 solid;
+    box-shadow: inset 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.form-control:active {
+    padding-left: 12px;
+    background: #262626;
+    border: 1px #989898 solid;
+    box-shadow: inset 0px 0px 4px 2px rgba(0, 0, 0, 0.25);
+}
+
+.typing{
+    min-height: 24px;
+    min-width: 1px;
+}
