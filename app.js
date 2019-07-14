@@ -18,7 +18,7 @@ const favicon = require('serve-favicon');
 
 ////////
 
-// config.port = process.env.PORT || 3000;
+config.port = process.env.PORT || 3000;
 
 var app = express();
 app.set('port', config.port);
