@@ -9,7 +9,7 @@ exports.get = async function(req, res, next) {
         }
         User.findById(req.query.id).exec((err, user) => {
             if (err) return next(new HttpError(404, "Такого пользователя не существует"));
-
+            
             if (req.session.theme) {
                 res.render('idProfile', { user: user, theme: req.session.theme, userIdThis: req.session.user });
             } else {

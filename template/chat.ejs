@@ -18,7 +18,7 @@
 <body>
     <nav class="navbar navbar-expand-lg DarkChat">
         <a class="navbar-brand" href="/">
-            <h3>TwiChat v0.6</h3>
+            <h3>TwiChat v0.6.1</h3>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
             aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -218,7 +218,10 @@
         socket
             .on('message accept', function (username, message, id) {
                 // console.log(user)
-                if (Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height()) == Math.round($("#mess_container").scrollTop())) {
+                // console.log(Math.round(Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height())/10));
+                // console.log(Math.round(Math.round($("#mess_container").scrollTop())/10));
+                // console.log(Math.round(Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height())/10) == Math.round(Math.round($("#mess_container").scrollTop())/10));
+                if (Math.round(Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height())/10) == Math.round(Math.round($("#mess_container").scrollTop())/10)) {
                     slowScroll();
                 }
                 addMessage(username, message, id);

@@ -18,5 +18,6 @@
             "httpOnly": true,
             "maxAge": null
         }
-    }
+    },
+    "devMode": false
 }

@@ -12,14 +12,10 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const errorHandler = require('errorhandler');
 const favicon = require('serve-favicon');
-// var mongoose = require('./libs/mongoose');
-////////
 
-
-////////
-
+if(!config.devMode){
 config.port = process.env.PORT || 3000;
-
+}
 var app = express();
 app.set('port', config.port);
 
