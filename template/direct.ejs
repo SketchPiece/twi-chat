@@ -214,7 +214,7 @@
                 // console.log(docs);
                 // console.log(docs.userid);
                 // console.log(userid);
-                if (Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height()) == Math.round($("#mess_container").scrollTop())) {
+                if (Math.round(Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height())/10) == Math.round(Math.round($("#mess_container").scrollTop())/10)) {
                     slowScroll();
                 }
                 // console.log(Math.round($('#mess_container')[0].scrollHeight - $('#mess_container').height()));
