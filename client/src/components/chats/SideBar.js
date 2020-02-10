@@ -2,9 +2,11 @@ import React from 'react'
 import User from './User'
 import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
 
-export default function SideBar({viewState,chatSwitch}) {
+export default function SideBar({viewState,chatSwitch,hide}) {
     return (
-        <div id="side-bar" className={viewState ? "" : "side-bar-hide"}>
+        <div id="side-bar" className={viewState ? " " : "side-bar-hide"} 
+        style={hide ? {"z-index":"0"}:{"z-index":"-1"}}
+        >
 					<div className="heading">
                         <div 
                         id="back"

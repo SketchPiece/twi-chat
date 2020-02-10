@@ -1,18 +1,19 @@
 import React from 'react';
-// import './index.css';
-import Chat from './components/Chat';
+import './index.css';
+// import Chat from './pages/Chat';
+import { BrowserRouter as Router } from 'react-router-dom';
+// import ChatContainer from './components/chats/ChatContainer';
+import { useRoutes } from './routes';
 
 function App() {
-  // if(true){}
-  // const bol = true;
-  // function importStyles(){
-  //   import('./index.css')
-  // }
+  const isAuthenticated = true;
+  const routes = useRoutes(isAuthenticated);
+
   return (
-    
-      
-      <Chat />
-    
+      // <Chat />
+      <Router>
+            {routes}
+      </Router>
   );
 }
 
