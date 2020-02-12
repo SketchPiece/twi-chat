@@ -1,9 +1,10 @@
 import React from 'react'
 
-export default function Message({message,right,name}) {
+export default function Message({message,me,name,img}) {
     return (
-        <div className={`message-container` + (right ? ' right':'')}>
-            <div className="time">20:20</div>
+        <div className={`message-container` + (me ? ' me animated slideInRight':' animated slideInLeft')}>
+            {/* <div className="time">20:20</div> */}
+            <img src={img} alt="avatar"/>
             <div className="data">
                 <div className="message">{message}</div>
                 <div className="name">{name}</div>

@@ -5,7 +5,7 @@ import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
 export default function SideBar({viewState,chatSwitch,hide}) {
     return (
         <div id="side-bar" className={viewState ? " " : "side-bar-hide"} 
-        style={hide ? {"z-index":"0"}:{"z-index":"-1"}}
+        style={hide ? {zIndex:-1}:{zIndex:0}}
         >
 					<div className="heading">
                         <div 

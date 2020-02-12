@@ -7,9 +7,12 @@ import '../styles/Chat.css'
 import { Animated } from 'react-animated-css'
 import { useWindowSize } from '../hooks/winsize.hook'
 
+
 export default function Chat() {
     const [isChat,setIsChat] = useState(false)
     const [hide, setHide] = useState(true)
+    const [visibleButton, setVisibleButton] = useState(false)
+    
 
     const [width] = useWindowSize()
 
@@ -18,28 +21,30 @@ export default function Chat() {
         if(isChat){
             setTimeout((setHide)=>{
                 setHide(true)
-            },1000,setHide)
+            },400,setHide)
         }else{
             setHide(false)
         }
         setIsChat(!isChat)
     }
 
+    
+
     return (
         <div className="container">
             { width<=510 ? 
                 (
                     <>
-                    <Animated style={{"width":"100%"}} animationIn="slideInLeft" animationOut={"slideOutLeft"} isVisible={isChat}>
-                    <div className={"chat-room-container" + (!hide ? " chat-active": " chat-hide")}> {/* chat-active */}
+                    <Animated style={{"width":"100%"}} animationIn="slideInLeft" animationOut="slideOutLeft" animationInDuration={400} animationOutDuration={400} isVisible={isChat}>
+                    <div className={"chat-room-container" + (!hide ? " chat-active": " chat-hide")}>
                         <div className="chat-room">
                             <ChatHeading barSwitch={viewSwitch} />
-                            <Messages />
-                            <MessageInput />
+                            <Messages setVisibleButton={setVisibleButton} />
+                            <MessageInput visibleButton={visibleButton} />
                         </div>
                     </div>
                     </Animated>
-                    <SideBar viewState={!isChat} chatSwitch={viewSwitch} hide={hide} />
+                    <SideBar viewState={!isChat} chatSwitch={viewSwitch} hide={!hide} />
                     </>
                 ) :
                 (
@@ -47,8 +52,8 @@ export default function Chat() {
                     <div className="chat-room-container">
                         <div className="chat-room">
                             <ChatHeading barSwitch={viewSwitch} />
-                            <Messages />
-                            <MessageInput />
+                            <Messages setVisibleButton={setVisibleButton} />
+                            <MessageInput visibleButton={visibleButton} />
                         </div>
                     </div>
                     {/* </Animated> */}
