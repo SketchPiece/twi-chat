@@ -1,9 +1,13 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import { Link } from 'react-router-dom'
 import { Animated } from "react-animated-css";
+import { useHttp } from '../hooks/http.hook';
+import { AuthContext } from '../context/AuthContext';
 // import { randomAnimation } from '../scripts/extra'
 
 export default function Register() {
+    const auth = useContext(AuthContext);
+
     const [form, setForm] = useState({
         username:"",password:"",repPassword:""
     })
@@ -12,21 +16,44 @@ export default function Register() {
     const [inputErr, setInputErr] = useState({
         username:0,password:0,repPassword:0
     })
+    const {loading,request} = useHttp()
+    
+    // useEffect(() => {
+    //     // console.log("Error",error)
+    //     // message(error)
+    //     // console.log(error)
+    //     // if(error){
+
+    //     // }
+    //     // setWarnStatus(1)
+    //     // setWarnText(error)
+    //     // setInputErr({...inputErr,username:1})
+    //     // clearError()
+    // }, [])
+    
     const changeHandler = e =>{
         e.target.classList.remove('input-red');
         //animated
         // e.target.classList.remove('animated');
-
+        
         setWarnStatus(0);
-        setForm({ ...form,[e.target.name]: e.target.value })
+        setForm({ ...form,[e.target.name]: e.target.value.trim() })
     }
-    const registerHandler = (e)=>{
+    const registerHandler = async e =>{
         e.preventDefault()
         // setWarnStatus('none');
         // console.log(form.name)
+        setInputErr({...inputErr,username:0,password:0,repPassword:0})
         if(!form.username) {
             setWarnStatus(1)
             setWarnText("Логин обязательное поле!")
+            setInputErr({...inputErr,username:1})
+            // console.log(inputErr)
+            return;
+        }
+        if(form.username.includes(' ')) {
+            setWarnStatus(1)
+            setWarnText("Логин не дожен содержать пробелов!")
             setInputErr({...inputErr,username:1})
             // console.log(inputErr)
             return;
@@ -45,7 +72,20 @@ export default function Register() {
             return;
         }
         // console.log(form)
-        alert("register!")
+        // alert("register!")
+        try{
+            const data = await request('/api/auth/register','POST', {...form})
+            // console.log('data',data)
+            auth.login(data.token,data.userId,data.username)
+
+            // message(data.message)
+            // console.log()
+        }catch(e){
+            console.log(e.message)
+            setWarnStatus(1)
+            setWarnText(e.message)
+            setInputErr({...inputErr,username:1,password:1,repPassword:1})
+        }
     }
 
     const warnClass = () => {
@@ -61,7 +101,7 @@ export default function Register() {
         }
     }
     const warnInput = (target) => {
-        console.log(inputErr[target])
+        // console.log(inputErr[target])
         switch(inputErr[target]){
             case 0:
                 return ""
@@ -122,7 +162,7 @@ export default function Register() {
                     className={warnInput("repPassword")}
                     onAnimationEnd={()=>{setInputErr({...inputErr,repPassword:2})}}
                     />
-                    <button onClick={registerHandler}>Зарегистрироваться</button>
+                    <button onClick={registerHandler} disabled={loading}>Зарегистрироваться</button>
                     <Link to='/login'>Уже зарегистрированы?</Link>
                     </div>
                 </div>            

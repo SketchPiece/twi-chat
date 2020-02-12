@@ -9,8 +9,8 @@ import { useWindowSize } from '../hooks/winsize.hook'
 
 
 export default function Chat() {
-    const [isChat,setIsChat] = useState(false)
-    const [hide, setHide] = useState(true)
+    const [isChat,setIsChat] = useState(true)
+    const [hide, setHide] = useState(false)
     const [visibleButton, setVisibleButton] = useState(false)
     
 
@@ -35,7 +35,7 @@ export default function Chat() {
             { width<=510 ? 
                 (
                     <>
-                    <Animated style={{"width":"100%"}} animationIn="slideInLeft" animationOut="slideOutLeft" animationInDuration={400} animationOutDuration={400} isVisible={isChat}>
+                    <Animated style={{width:"100%",height:"100%"}} animationIn="slideInLeft" animationOut="slideOutLeft" animationInDuration={400} animationOutDuration={400} isVisible={isChat} animateOnMount={false}>
                     <div className={"chat-room-container" + (!hide ? " chat-active": " chat-hide")}>
                         <div className="chat-room">
                             <ChatHeading barSwitch={viewSwitch} />
