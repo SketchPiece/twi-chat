@@ -142,7 +142,7 @@ textarea {
   flex-grow: 1;
 }
 #side-bar .users::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #151515;
 }
 #side-bar .users::-webkit-scrollbar {
@@ -253,7 +253,7 @@ textarea {
   position: fixed;
   /* top:86%; */
   /* left:30%; */
-  bottom: 90px;
+  bottom: 75px;
   display: flex;
   justify-content: center;
   /* margin: 10px 15px; */
@@ -261,7 +261,7 @@ textarea {
   height: 0px;
   background-color: #151515;
   /* height: 10px; */
-  width: 72%;
+  width: 70%;
 }
 /* .typing-user p{
   margin-bottom: 10px;
@@ -386,7 +386,7 @@ textarea {
   /* background-color: #fff; */
 }
 .thread-container::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #151515;
 }
 .thread-container::-webkit-scrollbar {
@@ -588,7 +588,7 @@ textarea {
   border: none;
 }
 .message-input .message-form .form-control::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #151515;
 }
 .message-input .message-form .form-control::-webkit-scrollbar {
@@ -631,4 +631,8 @@ textarea {
   width: 4rem;
   justify-content: space-between;
   align-items: center;
+}
+
+.react-button:hover{
+  cursor: pointer;
 }

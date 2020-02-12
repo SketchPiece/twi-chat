@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import User from './User'
 import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
+import { IconContext } from "react-icons";
+import { AuthContext } from '../../context/AuthContext';
+import { useHistory } from 'react-router-dom';
+
 
 export default function SideBar({viewState,chatSwitch,hide}) {
+    const auth = useContext(AuthContext)
+    const history = useHistory()
+    const logoutHandler = e =>{
+        e.preventDefault()
+        auth.logout()
+        history.push('/')
+    }
     return (
         <div id="side-bar" className={viewState ? " " : "side-bar-hide"} 
         style={hide ? {zIndex:-1}:{zIndex:0}}
@@ -13,7 +24,11 @@ export default function SideBar({viewState,chatSwitch,hide}) {
                         onClick={()=>{chatSwitch()}}
                         > <IoIosArrowBack/> </div>
 						<div className="app-name">TwiChat v0.8</div>
-                        <div className="menu"><IoIosPerson/></div>
+                        <div className="menu">
+                        <IconContext.Provider value={{ color: "white", size:"20px" }}>
+                            <IoIosPerson className="react-button"/>
+                        </IconContext.Provider>
+                        </div>
 					</div>
 					{/* <div className="search">
 						<i className="search-icon"></i>
@@ -53,7 +68,9 @@ export default function SideBar({viewState,chatSwitch,hide}) {
 					</div>
 					<div className="current-user">
 						<span>{"Sketch"}</span> 
-                        <IoIosLogOut/>
+                        <IconContext.Provider value={{ color: "white", size:"20px" }}>
+                            <IoIosLogOut onClick={logoutHandler} className="react-button" />
+                        </IconContext.Provider>                        
 					</div>
 			</div>
     )

@@ -67,7 +67,7 @@ export default function MessageInput({visibleButton}) {
             {/* </Animated> */}
             
             <div className="typing-user animated infinite pulse">
-                    <p className="">{'Sketch кастует...'}</p> 
+                    {/* <span>{'Sketch кастует...'}</span>  */}
             </div>
             <div className="message-input">
                 
