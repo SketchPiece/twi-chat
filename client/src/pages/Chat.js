@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect, useContext} from 'react'
 import SideBar from '../components/chats/SideBar'
 import ChatHeading from '../components/chats/ChatHeading'
 import Messages from '../components/messages/Messages'
@@ -6,16 +6,34 @@ import MessageInput from '../components/messages/MessageInput'
 import '../styles/Chat.css'
 import { Animated } from 'react-animated-css'
 import { useWindowSize } from '../hooks/winsize.hook'
+import io from 'socket.io-client'
+import { AuthContext } from '../context/AuthContext'
 
 
 export default function Chat() {
+    const auth = useContext(AuthContext)
     const [isChat,setIsChat] = useState(true)
     const [hide, setHide] = useState(false)
     const [visibleButton, setVisibleButton] = useState(false)
-    
+    const [socket, setSocket] = useState(null)
 
     const [width] = useWindowSize()
 
+    useEffect(()=>{
+        const ioSocket = io({
+            query: {
+                token:auth.token
+            }
+        })
+        ioSocket.on('connect',()=>{
+            console.log("Connected")
+        })
+        ioSocket.on('logout', ()=>{
+            auth.logout()
+        })
+        // ioSocket.emit("hi")
+        setSocket(ioSocket)
+    },[])
 
     function viewSwitch(){
         if(isChat){
@@ -44,7 +62,7 @@ export default function Chat() {
                         </div>
                     </div>
                     </Animated>
-                    <SideBar viewState={!isChat} chatSwitch={viewSwitch} hide={!hide} />
+                    <SideBar socket={socket} viewState={!isChat} chatSwitch={viewSwitch} hide={!hide} />
                     </>
                 ) :
                 (
@@ -57,7 +75,7 @@ export default function Chat() {
                         </div>
                     </div>
                     {/* </Animated> */}
-                    <SideBar viewState={true} chatSwitch={viewSwitch} />
+                    <SideBar socket={socket} viewState={true} chatSwitch={viewSwitch} />
                     </>
                 )
             }
