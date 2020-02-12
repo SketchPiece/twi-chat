@@ -28,14 +28,14 @@ export default function Register() {
             setWarnStatus(1)
             setWarnText("Логин обязательное поле!")
             setInputErr({...inputErr,username:1})
-            console.log(inputErr)
+            // console.log(inputErr)
             return;
         }
         if(!form.password){
             setWarnStatus(1)
             setWarnText("Пароль обязательное поле!")
             setInputErr({...inputErr,password:1})
-            console.log(inputErr)
+            // console.log(inputErr)
             return;
         }
         if(form.password!==form.repPassword){
@@ -56,6 +56,8 @@ export default function Register() {
                 return "warning animated fadeIn"
             case 2:
                 return "warning"
+            default:
+                return ""
         }
     }
     const warnInput = (target) => {
@@ -67,6 +69,8 @@ export default function Register() {
                 return "animated shake fast input-red"
             case 2:
                 return "input-red"
+            default:
+                return ""
         }
     }
 
