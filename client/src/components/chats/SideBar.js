@@ -6,11 +6,12 @@ import { AuthContext } from '../../context/AuthContext';
 import { useHistory } from 'react-router-dom';
 
 
-export default function SideBar({viewState,chatSwitch,hide}) {
+export default function SideBar({viewState,chatSwitch,hide,socket}) {
     const auth = useContext(AuthContext)
     const history = useHistory()
     const logoutHandler = e =>{
         e.preventDefault()
+        socket.emit('logout','test')
         auth.logout()
         history.push('/')
     }

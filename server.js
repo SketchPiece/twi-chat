@@ -1,7 +1,8 @@
 const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
-const path = require('path')
+
+// const path = require('path')
 const PORT = config.get('port') || 5000
 
 const app = express()
@@ -19,13 +20,16 @@ async function start(){
             useCreateIndex: true
         })
         console.log("MongoDB Connected!")
+        let server = require('http').createServer(app)
 
-        app.listen(PORT,()=>{
+        server.listen(PORT,()=>{
             console.log(`TwiChat запущен! Порт: ${PORT}`)
         })
-        
-    } catch{
-        console.log('Server Error', e.message)
+
+        let io = require('./socket')(server)
+        app.set('io',io)
+    } catch(e){
+        console.log('Server Error', e)
         process.exit(1)
     }
 }
