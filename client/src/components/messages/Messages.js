@@ -1,20 +1,27 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext} from 'react'
 import Message from './Message'
+import { UserContext } from '../../context/UserContext';
 
-export default function Messages({setVisibleButton}) {
+export default function Messages({setVisibleButton,messages}) {
     const [loading
         // ,setLoading
     ] = useState(false);
+
+    let user = useContext(UserContext)
 
     useEffect(() => {
         // console.log('scroll')
         let container = document.getElementById('msgs');
         container.scrollTo(0, container.scrollHeight-container.offsetHeight);
-        console.log('set false')
+        // console.log('set false')
         setVisibleButton(false)
         // console.log();
     }, [setVisibleButton])
     
+    // useEffect(()=>{
+    //     console.log(messages)
+    // },[messages])
+
     function scrollHandler() {
         const thread = document.getElementById("msgs")
         const scrollMax = thread.scrollHeight-thread.offsetHeight
@@ -41,7 +48,12 @@ export default function Messages({setVisibleButton}) {
             ) : (
 				<div className="thread" id="msgsInner">
                     
-                    <Message message={'Привет всем!'} me={true} name={"Sketch"} img={"https://cdn.discordapp.com/avatars/331103366774259713/98a1aff5ac590c1840571f504955bc12.png?size=256"} />
+                    {
+                        messages.map((msg, index)=>{                           
+                            return <Message key={index} message={msg.text} me={user.userId === msg.userId ? true : false} name={msg.username} img={"https://cdn.discordapp.com/avatars/578197813821833227/ca27c52873bb1c3ee33aca4fbc0a09bf.png?size=256"} />
+                        })
+                    }
+                    {/* <Message message={'Привет всем!'} me={true} name={"Sketch"} img={"https://cdn.discordapp.com/avatars/331103366774259713/98a1aff5ac590c1840571f504955bc12.png?size=256"} />
                     <Message message={'Чем занимаетесь?'} me={true} name={"Sketch"} img={"https://cdn.discordapp.com/avatars/331103366774259713/98a1aff5ac590c1840571f504955bc12.png?size=256"} />
                     
                     <Message message={'Ничем особо, страдаем херней дружно'} me={false} name={"MasterTime"} img={"https://cdn.discordapp.com/avatars/296717915921711104/1283e05dbeee00217565ae3cd7224fde.png?size=256"} />
@@ -54,7 +66,7 @@ export default function Messages({setVisibleButton}) {
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"https://cdn.discordapp.com/avatars/331103366774259713/98a1aff5ac590c1840571f504955bc12.png?size=256"} />
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"https://cdn.discordapp.com/avatars/331103366774259713/98a1aff5ac590c1840571f504955bc12.png?size=256"} />
 
-                    <Message message={'Панладовая система, в первом приближении, свободна. Open-air, в первом приближении, синхронно варьирует сонорный хамбакер. Фузз иллюстрирует флажолет, однако сами песни забываются очень быстро. Процессуальное изменение волнообразно. Канал, согласно традиционным представлениям, неравномерен.'} me={false} name={"MasterTime"} img={"https://cdn.discordapp.com/avatars/296717915921711104/1283e05dbeee00217565ae3cd7224fde.png?size=256"} />
+                    <Message message={'Панладовая система, в первом приближении, свободна. Open-air, в первом приближении, синхронно варьирует сонорный хамбакер. Фузз иллюстрирует флажолет, однако сами песни забываются очень быстро. Процессуальное изменение волнообразно. Канал, согласно традиционным представлениям, неравномерен.'} me={false} name={"MasterTime"} img={"https://cdn.discordapp.com/avatars/296717915921711104/1283e05dbeee00217565ae3cd7224fde.png?size=256"} /> */}
 
 				</div>
                 )

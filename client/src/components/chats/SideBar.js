@@ -1,20 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import User from './User'
 import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
 import { IconContext } from "react-icons";
 import { AuthContext } from '../../context/AuthContext';
 import { useHistory } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
 
 export default function SideBar({viewState,chatSwitch,hide,socket}) {
+    const {username,avatar,load} = useContext(UserContext);
     const auth = useContext(AuthContext)
     const history = useHistory()
     const logoutHandler = e =>{
         e.preventDefault()
-        socket.emit('logout','test')
+        socket.emit('logout')
         auth.logout()
         history.push('/')
     }
+    // useEffect(()=>{
+    //     // console.log(user)
+    // },[user])
     return (
         <div id="side-bar" className={viewState ? " " : "side-bar-hide"} 
         style={hide ? {zIndex:-1}:{zIndex:0}}
@@ -55,7 +60,7 @@ export default function SideBar({viewState,chatSwitch,hide,socket}) {
                             
                         </div>
 						
-                        <User username={"MasterTime"} />
+                        {/* <User username={"MasterTime"} /> */}
                         {/* <User username={"MasterTime"} />
                         <User username={"MasterTime"} />
                         <User username={"MasterTime"} />
@@ -68,7 +73,10 @@ export default function SideBar({viewState,chatSwitch,hide,socket}) {
 						
 					</div>
 					<div className="current-user">
-						<span>{"Sketch"}</span> 
+                        <div className="user-container">
+                        <img className={ "avatar"+(!load ? " animated slideInRight" : ' none')} src={avatar} alt="avatar"/>
+						<span className={ "username"+(!load ? " animated slideInRight" : ' none')}>{username}</span> 
+                        </div>
                         <IconContext.Provider value={{ color: "white", size:"20px" }}>
                             <IoIosLogOut onClick={logoutHandler} className="react-button" />
                         </IconContext.Provider>                        

@@ -28,7 +28,7 @@ export const useAuth = () => {
     const reload = useCallback(()=>{
         const data = JSON.parse(localStorage.getItem(storageName))
         if(!(data && data.token)) logout()
-    },[])
+    },[logout])
 
     useEffect(()=>{
         const data = JSON.parse(localStorage.getItem(storageName))

@@ -199,6 +199,23 @@ textarea {
   justify-content: center;
   font-size: 2em;
 }
+
+#side-bar .avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: #393939 2px solid;
+}
+
+#side-bar .user-container{
+  display: flex;
+  align-items: center;
+}
+
+#side-bar .user-container .username{
+  margin-left: 10px;
+}
+
 .chat-header {
   background: #393939;
   /* box-shadow: 0px 6px 5px -2px rgba(225, 225, 225, 0.7); */

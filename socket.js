@@ -1,7 +1,9 @@
 
 
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const config = require('config')
+const {ObjectId} = require('mongoose').Types
+const User = require("./models/User")
 
 const socket = (server) => {
     const io = require('socket.io')(server, {
@@ -14,33 +16,33 @@ const socket = (server) => {
             
             jwt.verify(socket.handshake.query.token, config.get('jwtSecret'), function(err, decoded) {
                 if(err) {
-                    console.log("jwt кончился")
-                    socket.emit("logout")
-                    return next(new Error('Authentication error'))
+                    socket.authError = true
+                    return next()
                 }
                 socket.userId = decoded.userId
                 next()
             })
         } else {
-            next(new Error('Authentication error'))
+            socket.authError = true
+            next()
         } 
-        // console.log(socket.handshake)   
       })
-    .on('connection',(socket)=>{
-        console.log("Socket Id:",socket.id);
-        console.log(socket.userId)
+    .on('connection',async (socket)=>{
+        if(socket.authError) return socket.emit('logout')
+        const user = await User.findOne({_id: new ObjectId(socket.userId)})
+        socket.emit("user_info",{username:user.username,avatar:user.avatar,userId:socket.userId})
+        console.log(user.username,'connected')
         socket.join(socket.userId);
-        socket.on('logout',()=>{
+        socket.join('community')
+        socket.on('logout',() => {
             socket.in(socket.userId).emit("reload")
-            // console.log(socket.userId,"logout")
         })
-        // socket.on('hi',()=>{
-        //     console.log("hi")
-        // })
-
+        socket.on('send_message',({text,username,userId,chat})=>{
+            // console.log(text,chat)
+            io.in(chat).emit('push_message',{text,username,userId})
+        })
     })
     
-
     return io
 }
 
