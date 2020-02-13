@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Message({message,me,name,img}) {
     return (
-        <div className={`message-container` + (me ? ' me animated slideInRight':' animated slideInLeft')}>
+        <div className={`message-container` + (me ? ' me':' ')}>
             {/* <div className="time">20:20</div> */}
             <img src={img} alt="avatar"/>
             <div className="data">

@@ -1,6 +1,7 @@
 import React,{useState,useEffect, useContext} from 'react'
 import Message from './Message'
 import { UserContext } from '../../context/UserContext';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default function Messages({setVisibleButton,messages}) {
     const [loading
@@ -37,6 +38,7 @@ export default function Messages({setVisibleButton,messages}) {
             setVisibleButton(true) 
         }
     }
+    
 
     return (
 
@@ -47,12 +49,26 @@ export default function Messages({setVisibleButton,messages}) {
                 </div>
             ) : (
 				<div className="thread" id="msgsInner">
-                    
+                    <ReactCSSTransitionGroup
+                        transitionName={{
+                            enter: "animated",
+                            enterActive: "zoomIn",
+                            leave: "animated",
+                            
+                            // leaveActive: "fadeOutRight"
+                        }}
+                        // transitionAppearTimeout={1000}
+                        // transitionEnter={1000}
+                        // transitionLeaveTimeout={1000}
+                        >
                     {
-                        messages.map((msg, index)=>{                           
-                            return <Message key={index} message={msg.text} me={user.userId === msg.userId ? true : false} name={msg.username} img={"https://cdn.discordapp.com/avatars/578197813821833227/ca27c52873bb1c3ee33aca4fbc0a09bf.png?size=256"} />
+                        messages.map((msg, index)=>{               
+                            // console.log(user.userId===msg.userId)            
+                            return <Message className="fast" key={index} message={msg.text} me={user.userId === msg.userId ? true : false} name={msg.username} img={"https://cdn.discordapp.com/avatars/578197813821833227/ca27c52873bb1c3ee33aca4fbc0a09bf.png?size=256"} />
                         })
                     }
+                    </ReactCSSTransitionGroup>
+                    
                     {/* <Message message={'Привет всем!'} me={true} name={"Sketch"} img={"https://cdn.discordapp.com/avatars/331103366774259713/98a1aff5ac590c1840571f504955bc12.png?size=256"} />
                     <Message message={'Чем занимаетесь?'} me={true} name={"Sketch"} img={"https://cdn.discordapp.com/avatars/331103366774259713/98a1aff5ac590c1840571f504955bc12.png?size=256"} />
                     
