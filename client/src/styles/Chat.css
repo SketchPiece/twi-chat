@@ -529,7 +529,7 @@ textarea {
   color: white;
   background: #313131;
   padding: 10px 20px 10px 90px;
-  max-width: 245px;
+  /* max-width: 245px; */
 }
 .message-container .name{
   margin-left: 80px;
@@ -544,6 +544,7 @@ textarea {
   display: flex;
   flex-direction: row-reverse;
   padding: 0;
+  padding-right: 10px;
 }
 
 .me .data{
@@ -612,11 +613,18 @@ textarea {
   background: #2e2e2e;
   transition: all 0.35s ease-out;
   outline: none;
+  cursor: pointer;
 }
 .message-input .message-form .send:disabled {
   opacity: 0.2;
-  background: #5d5d8a;
+  /* background: grey; */
 }
+
+.message-input .message-form .send:active {
+  /* opacity: 0.2; */
+  background: #202020;
+}
+
 
 .loading{
   display: flex;

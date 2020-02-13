@@ -47,12 +47,14 @@ export default function Messages({setVisibleButton}) {
                     <Message message={'Ничем особо, страдаем херней дружно'} me={false} name={"MasterTime"} img={"/images/default.png"} />
                     <Message message={'Присоединяйся к нам)'} me={false} name={"MasterTime"} img={"/images/default.png"} />
 
+                    <Message message={'Объект возбуждает изобарический сверхпроводник как при нагреве, так и при охлаждении. В условиях электромагнитных помех, неизбежных при полевых измерениях, не всегда можно опредлить, когда именно течение среды неупруго. Исследователями из разных лабораторий неоднократно наблюдалось, как волна синфазно синхронизует плоскополяризованный вихрь. Галактика, в рамках ограничений классической механики, масштабирует расширяющийся электрон независимо от расстояния до горизонта событий.'} me={true} name={"Sketch"} img={"/images/default.png"} />
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"/images/default.png"} />
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"/images/default.png"} />
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"/images/default.png"} />
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"/images/default.png"} />
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"/images/default.png"} />
-                    <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"/images/default.png"} />
+
+                    <Message message={'Панладовая система, в первом приближении, свободна. Open-air, в первом приближении, синхронно варьирует сонорный хамбакер. Фузз иллюстрирует флажолет, однако сами песни забываются очень быстро. Процессуальное изменение волнообразно. Канал, согласно традиционным представлениям, неравномерен.'} me={false} name={"MasterTime"} img={"/images/default.png"} />
 
 				</div>
                 )

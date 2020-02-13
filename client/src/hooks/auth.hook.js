@@ -25,6 +25,11 @@ export const useAuth = () => {
         localStorage.removeItem(storageName)
     },[])
 
+    const reload = useCallback(()=>{
+        const data = JSON.parse(localStorage.getItem(storageName))
+        if(!(data && data.token)) logout()
+    },[])
+
     useEffect(()=>{
         const data = JSON.parse(localStorage.getItem(storageName))
         if(data && data.token){
@@ -33,5 +38,5 @@ export const useAuth = () => {
         setReady(true)
     },[login])
 
-    return {login,logout,token,userId,username,ready}
+    return {login,logout,token,reload,userId,username,ready}
 }

@@ -9,7 +9,7 @@ import Loader from './components/Loader';
 import { AuthContext } from './context/AuthContext';
 
 function App() {
-  const {token,login,logout,userId,username,ready} = useAuth()
+  const {token,login,logout,reload,userId,username,ready} = useAuth()
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
 
@@ -19,7 +19,7 @@ function App() {
 
   return (
     <AuthContext.Provider value={{
-      token,login,logout,userId,username,isAuthenticated
+      token,login,logout,reload,userId,username,isAuthenticated
     }}>
       <Router>
             {routes}
