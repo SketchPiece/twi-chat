@@ -512,7 +512,7 @@ textarea {
   /* animation: 0.65s ease-out 0s show; */
   margin-top: 10px;
   margin-bottom: 10px;
-
+  animation-duration: 400ms;
 }
 
 @keyframes show {

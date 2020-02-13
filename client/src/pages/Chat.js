@@ -6,18 +6,26 @@ import MessageInput from '../components/messages/MessageInput'
 import '../styles/Chat.css'
 import { Animated } from 'react-animated-css'
 import { useWindowSize } from '../hooks/winsize.hook'
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import { AuthContext } from '../context/AuthContext'
 import {useHistory} from 'react-router-dom'
 import {UserContext} from '../context/UserContext'
-import { set } from 'mongoose'
+import useSocket from 'use-socket.io-client'
+// import { set } from 'mongoose'
 
 export default function Chat() {
     const auth = useContext(AuthContext)
     const [isChat,setIsChat] = useState(true)
     const [hide, setHide] = useState(false)
     const [visibleButton, setVisibleButton] = useState(false)
-    const [socket, setSocket] = useState(null)
+    // const [socket, setSocket] = useState(null)
+    const [socket] = useSocket({
+        query: {
+            token:auth.token
+        },
+        autoConnect: false
+    });   
+
     const history = useHistory()
     const [user, setUser] = useState({
         username:'',avatar:'',userId:'',load:true
@@ -30,15 +38,22 @@ export default function Chat() {
 
     const [width] = useWindowSize()
 
+    
+
+    // useEffect(()=>{
+    //     const ioSocket = io({
+    //         query: {
+    //             token:auth.token
+    //         }
+    //     })
+    //     setSocket(ioSocket)
+    // },[])
+
     useEffect(()=>{
-        const socket = io({
-            query: {
-                token:auth.token
-            }
+        // if(!socket) return
+        socket.on('connect',()=>{
+            console.log("Connected")
         })
-        // ioSocket.on('connect',()=>{
-        //     // console.log("Connected")
-        // })
         socket.on('reload', ()=>{
             auth.reload()
         })
@@ -57,17 +72,17 @@ export default function Chat() {
             console.log('Получено',message)
             // console.log(messages)
         })
-        // socket.on('push',({text,username,userId})=>{
-        //     console.log('push')
-        // })
+        socket.on('push',({text,username,userId})=>{
+            console.log('push')
+        })
         // ioSocket.emit("hi")
 
-        setSocket(socket)
-    },[history,auth,messages])
+        // setSocket(ioSocket)
+    },[socket,history,auth,messages])
 
-    // useEffect(()=>{
-    //     console.log(messages)
-    // },[messages])
+    useEffect(()=>{
+        socket.connect();
+    },[socket])
     
     function viewSwitch(){
         if(isChat){

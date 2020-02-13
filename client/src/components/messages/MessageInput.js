@@ -1,4 +1,4 @@
-import React,{useState, useContext, useEffect} from 'react'
+import React,{useState, useContext} from 'react'
 import { Animated } from 'react-animated-css';
 import { IoIosArrowDown } from "react-icons/io";
 import { IconContext } from "react-icons";

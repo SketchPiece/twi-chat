@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import User from './User'
+import React, { useContext} from 'react'
+// import User from './User'
 import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
 import { IconContext } from "react-icons";
 import { AuthContext } from '../../context/AuthContext';
