@@ -15,6 +15,7 @@ const socket = (server) => {
             jwt.verify(socket.handshake.query.token, config.get('jwtSecret'), function(err, decoded) {
                 if(err) {
                     console.log("jwt кончился")
+                    socket.emit("logout")
                     return next(new Error('Authentication error'))
                 }
                 socket.userId = decoded.userId
@@ -30,8 +31,8 @@ const socket = (server) => {
         console.log(socket.userId)
         socket.join(socket.userId);
         socket.on('logout',()=>{
-            socket.in(socket.userId).emit("logout")
-            console.log(socket.userId,"logout")
+            socket.in(socket.userId).emit("reload")
+            // console.log(socket.userId,"logout")
         })
         // socket.on('hi',()=>{
         //     console.log("hi")

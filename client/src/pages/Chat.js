@@ -28,6 +28,9 @@ export default function Chat() {
         ioSocket.on('connect',()=>{
             console.log("Connected")
         })
+        ioSocket.on('reload', ()=>{
+            auth.reload()
+        })
         ioSocket.on('logout', ()=>{
             auth.logout()
         })
