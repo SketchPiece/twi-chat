@@ -1,12 +1,38 @@
-import React,{useState} from 'react'
+import React,{useState, useContext, useEffect} from 'react'
 import { Animated } from 'react-animated-css';
 import { IoIosArrowDown } from "react-icons/io";
 import { IconContext } from "react-icons";
+import { UserContext } from '../../context/UserContext';
 
-export default function MessageInput({visibleButton}) {
-    const [type,setType] = useState("");
-
+export default function MessageInput({visibleButton,socket,chat}) {
+    const [inputText,setInputText] = useState("");
+    const {username,userId} = useContext(UserContext)
     // const [scroll, setScroll] = useState(0);
+
+    const pressHandler = (e) =>{
+        // console.log()
+        // console.log(e.key==="Enter" && e.shiftKey)
+        if(!(e.key==="Enter" && e.shiftKey)){
+            if(e.key==="Enter"){
+                e.preventDefault()
+                sendMessage(inputText)
+                // sendMessage(inputText)
+                // console.log("nonshift")
+            }
+        } 
+    }
+
+    const sendButtonHandler = (e)=>{
+        e.preventDefault()
+        sendMessage(inputText)
+    }
+
+    const sendMessage = (text) => {
+        // console.log(text)
+        setInputText('')
+        socket.emit('send_message',{text,username,userId,chat})
+        console.log('send')
+    }
 
     const scrollDownHandler = () =>{
         const thread = document.getElementById("msgs")
@@ -17,40 +43,6 @@ export default function MessageInput({visibleButton}) {
         // setVisibleButton(false)
     }
 
-    // thread.addEventListener('scroll', ()=>{console.log("scroll")});
-
-    // function updateScroll() {
-    //     const thread = document.getElementById("msgs")
-    //     const scrollMax = thread.scrollHeight-thread.offsetHeight
-    //     setScroll(thread.scrollTop);
-    //     console.log(scrollMax-scrollMax*0.10,scroll)
-    //     console.log(scrollMax-scrollMax*0.10<scroll)
-    //     if(scrollMax-scrollMax*0.10<scroll){
-    //         console.log('set true')
-    //         setVisibleButton(false)
-    //     }else{
-    //         console.log("set true")
-    //         setVisibleButton(true) 
-    //     }
-    //     // console.log("Visible",visibleButton)
-    //     // console.log(scrollMax-scrollMax*0.10,scrollMax*0.10,scroll)
-    //     // console.log(scroll,thread.scrollHeight)
-    //     // console.log(, thread.scrollTop,)
-        
-    // }
-
-    // useLayoutEffect(() => {
-    //     const thread = document.getElementById("msgs")
-    //     const scrollMax = thread.scrollHeight-thread.offsetHeight
-
-        
-    //     thread.addEventListener('scroll', updateScroll);
-
-    //     console.log(scrollMax-scrollMax*0.10,scroll)
-
-    //     updateScroll();
-    //     return () => thread.removeEventListener('scroll', updateScroll);
-    // }, [scroll,setScroll,setVisibleButton]);
 
     return (
         <div>
@@ -81,22 +73,23 @@ export default function MessageInput({visibleButton}) {
                             // ref = {"messageinput"}
                             type = "text"
                             className = "form-control"
-                            value = { type }
+                            value = { inputText }
                             autoComplete = 'off'
                             placeholder = "Напиши что то интересное"
                             // onKeyUp = { e => { e.keyCode !== 13 && this.sendTyping() } }
                             onChange = {
                                 ({target})=>{
-                                	setType(target.value)
+                                	setInputText(target.value)
                                 }
                             }
+                            onKeyPress={pressHandler}
                             />
                         <button
-                            disabled = {false} 
+                            // disabled = {false} 
                             // { message.length < 1 }
                             type = "submit"
                             className = "send"
-
+                            onClick={sendButtonHandler}
                         > ➤ </button>
                     </form>
 

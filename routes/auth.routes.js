@@ -15,23 +15,18 @@ router.post(
     try{
         const errors = validationResult(req)
         if(!errors.isEmpty()){
-            // console.log(errors.array()[0].msg)
             return res.status(400).json({
-                // errors: errors.array(),
                 message:errors.array()[0].msg
             })
         }
-        // console.log(req.body)
         const {username,password} = req.body
-        // console.log("Поиск пользователя")
+        // console.log(username,password)
         const candidate = await User.findOne({username})
         if(candidate){
             return res.status(400).json({message:'Такой пользователь существует'})
         }
-        // console.log("Крипт пароля")
 
         const hashedPassword = await bcrypt.hash(password,8)
-        // console.log("Пароль создан")
         
         const user = new User({username,password:hashedPassword})
         await user.save()

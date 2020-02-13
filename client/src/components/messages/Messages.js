@@ -1,20 +1,27 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext} from 'react'
 import Message from './Message'
+import { UserContext } from '../../context/UserContext';
 
-export default function Messages({setVisibleButton}) {
+export default function Messages({setVisibleButton,messages}) {
     const [loading
         // ,setLoading
     ] = useState(false);
+
+    let user = useContext(UserContext)
 
     useEffect(() => {
         // console.log('scroll')
         let container = document.getElementById('msgs');
         container.scrollTo(0, container.scrollHeight-container.offsetHeight);
-        console.log('set false')
+        // console.log('set false')
         setVisibleButton(false)
         // console.log();
     }, [setVisibleButton])
     
+    // useEffect(()=>{
+    //     console.log(messages)
+    // },[messages])
+
     function scrollHandler() {
         const thread = document.getElementById("msgs")
         const scrollMax = thread.scrollHeight-thread.offsetHeight
@@ -41,7 +48,12 @@ export default function Messages({setVisibleButton}) {
             ) : (
 				<div className="thread" id="msgsInner">
                     
-                    <Message message={'Привет всем!'} me={true} name={"Sketch"} img={"/images/default.png"} />
+                    {
+                        messages.map((msg, index)=>{                           
+                            return <Message key={index} message={msg.text} me={user.userId === msg.userId ? true : false} name={msg.username} img={"/images/default.png"} />
+                        })
+                    }
+                    {/* <Message message={'Привет всем!'} me={true} name={"Sketch"} img={"/images/default.png"} />
                     <Message message={'Чем занимаетесь?'} me={true} name={"Sketch"} img={"/images/default.png"} />
                     
                     <Message message={'Ничем особо, страдаем херней дружно'} me={false} name={"MasterTime"} img={"/images/default.png"} />
@@ -54,7 +66,7 @@ export default function Messages({setVisibleButton}) {
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"/images/default.png"} />
                     <Message message={'Согласны?Узнали?'} me={true} name={"Sketch"} img={"/images/default.png"} />
 
-                    <Message message={'Панладовая система, в первом приближении, свободна. Open-air, в первом приближении, синхронно варьирует сонорный хамбакер. Фузз иллюстрирует флажолет, однако сами песни забываются очень быстро. Процессуальное изменение волнообразно. Канал, согласно традиционным представлениям, неравномерен.'} me={false} name={"MasterTime"} img={"/images/default.png"} />
+                    <Message message={'Панладовая система, в первом приближении, свободна. Open-air, в первом приближении, синхронно варьирует сонорный хамбакер. Фузз иллюстрирует флажолет, однако сами песни забываются очень быстро. Процессуальное изменение волнообразно. Канал, согласно традиционным представлениям, неравномерен.'} me={false} name={"MasterTime"} img={"/images/default.png"} /> */}
 
 				</div>
                 )

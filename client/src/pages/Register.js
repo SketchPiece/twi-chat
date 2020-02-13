@@ -7,7 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 
 export default function Register() {
     const auth = useContext(AuthContext);
-
+    
     const [form, setForm] = useState({
         username:"",password:"",repPassword:""
     })
