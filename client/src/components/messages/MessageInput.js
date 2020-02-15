@@ -1,25 +1,83 @@
-import React,{useState, useContext} from 'react'
+import React,{useState, useContext,useEffect} from 'react'
 import { Animated } from 'react-animated-css';
 import { IoIosArrowDown } from "react-icons/io";
 import { IconContext } from "react-icons";
 import { UserContext } from '../../context/UserContext';
+import { useTimer } from 'react-timer-hook';
+// import {ToBottom} from '../../scripts/extra'
 
-export default function MessageInput({visibleButton,socket,chat}) {
+export default function MessageInput({visibleButton,socket,chat,typing}) {
     const [inputText,setInputText] = useState("");
+    const [type, setType] = useState('')
     const {username,userId} = useContext(UserContext)
+    // typing = typing[chat] ? typing[chat] : [] 
+
+
+    const time = new Date()
+    const timer = time.setSeconds(time.getSeconds() + 3);
+    const {restart,pause} = useTimer({ timer, onExpire: () => {
+        // console.log("закончил")
+        socket.emit('send_typing_off',{username,chat})
+        // socket.emit('typing_on')
+    } })
     // const [scroll, setScroll] = useState(0);
 
-    const pressHandler = (e) =>{
-        // console.log()
-        // console.log(e.key==="Enter" && e.shiftKey)
+    useEffect(()=>{
+        // console.log(typing)
+        if(!typing[chat]) return setType('')
+        // console.log(typing[chat])
+        // typing = typing[chat]
+        
+        if(typing[chat].length<=0){
+            setType('')
+        }
+        else if(typing[chat].length===1){
+            setType(`${typing[chat][0]} кастует...`);
+        }
+        else if(typing[chat].length===2){
+            setType(`${typing[chat][0]} и ${typing[chat][1]} кастуют...`);
+        }
+        else if(typing[chat].length===3){
+            setType(`${typing[chat][0]}, ${typing[chat][1]} и ${typing[chat][2]} кастуют...`);
+        }
+        else{
+            setType(`Кастуется мегазаклинание...`);
+        }
+    },[typing,chat])
+
+
+
+
+    // const pressHandler = (e) =>{
+    //     if(!(e.key==="Enter" && e.shiftKey)){
+    //         if(e.key==="Enter"){
+                
+    //         }
+    //     } 
+    // }
+    const keyUpHandler = (e) => {
+        // console.log('keyUp')
+        if(e.key==="Enter") return;
+        socket.emit('send_typing_on',{username,chat})
+        const time = new Date()
+        const timer = time.setSeconds(time.getSeconds() + 3);
+        restart(timer)
+
+    }
+
+    const keyDownHandler = (e) =>{
+        // console.log(e.target.value)
+        // setInputText(e.target.value)
+
+        // console.log('печатает...')
+        
         if(!(e.key==="Enter" && e.shiftKey)){
             if(e.key==="Enter"){
                 e.preventDefault()
+                // e.preventDefault()
                 sendMessage(inputText)
-                // sendMessage(inputText)
-                // console.log("nonshift")
             }
-        } 
+        }
     }
 
     const sendButtonHandler = (e)=>{
@@ -29,6 +87,10 @@ export default function MessageInput({visibleButton,socket,chat}) {
 
     const sendMessage = (text) => {
         // console.log(text)
+        // ToBottom()
+        pause()
+        socket.emit('send_typing_off',{username,chat})
+        if(!text) return 
         setInputText('')
         socket.emit('send_message',{text,username,userId,chat})
         console.log('send')
@@ -42,7 +104,6 @@ export default function MessageInput({visibleButton,socket,chat}) {
         })
         // setVisibleButton(false)
     }
-
 
     return (
         <div>
@@ -59,7 +120,7 @@ export default function MessageInput({visibleButton,socket,chat}) {
             {/* </Animated> */}
             
             <div className="typing-user animated infinite pulse">
-                    {/* <span>{'Sketch кастует...'}</span>  */}
+                    <span>{type}</span> 
             </div>
             <div className="message-input">
                 
@@ -82,7 +143,9 @@ export default function MessageInput({visibleButton,socket,chat}) {
                                 	setInputText(target.value)
                                 }
                             }
-                            onKeyPress={pressHandler}
+                            // onKeyPress={pressHandler}
+                            onKeyDown={keyDownHandler}
+                            onKeyUp={keyUpHandler}
                             />
                         <button
                             // disabled = {false} 

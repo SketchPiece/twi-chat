@@ -2,27 +2,44 @@ import React,{useState,useEffect, useContext} from 'react'
 import Message from './Message'
 import { UserContext } from '../../context/UserContext';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import {ToBottom} from '../../scripts/extra'
 
 export default function Messages({setVisibleButton,messages}) {
     const [loading
         // ,setLoading
     ] = useState(false);
+    const [isBottom, setIsBottom] = useState(true)
 
     let user = useContext(UserContext)
 
     useEffect(() => {
-        // console.log('scroll')
-        let container = document.getElementById('msgs');
-        container.scrollTo(0, container.scrollHeight-container.offsetHeight);
-        // console.log('set false')
-        setVisibleButton(false)
-        // console.log();
-    }, [setVisibleButton])
-    
-    // useEffect(()=>{
-    //     console.log(messages)
-    // },[messages])
+        ToBottom()
+        // setVisibleButton(false)
+    }, [])
 
+    useEffect(() => {
+        // let lastMsg = messages.pop()
+        if(messages.length!==0){
+            // console.log(messages[messages.length-1])
+            if(messages[messages.length-1].username === user.username) ToBottom()
+            // console.log(isBottom)
+            if(isBottom) ToBottom()
+        }
+        // let msgs = messages
+        // console.log(msgs.pop())
+        // setVisibleButton(false)
+        // const thread = document.getElementById("msgs")
+        // const scrollMax = thread.scrollHeight-thread.offsetHeight
+        // const scroll = thread.scrollTop;
+        // console.log(scrollMax,scroll)
+    }, [messages,isBottom,user])
+    
+
+    // useEffect(() => {
+    //     effect
+        
+    // })
+    
     function scrollHandler() {
         const thread = document.getElementById("msgs")
         const scrollMax = thread.scrollHeight-thread.offsetHeight
@@ -33,9 +50,12 @@ export default function Messages({setVisibleButton,messages}) {
         if(scrollMax-scrollMax*0.10<scroll){
             // console.log('set false')
             setVisibleButton(false)
+            setIsBottom(true)
         }else{
             // console.log("set true")
-            setVisibleButton(true) 
+            setVisibleButton(true)
+            setIsBottom(false)
+
         }
     }
     

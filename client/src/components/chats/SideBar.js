@@ -1,25 +1,37 @@
 import React, { useContext} from 'react'
 // import User from './User'
 import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
+import { FaComments } from 'react-icons/fa'
+
 import { IconContext } from "react-icons";
 import { AuthContext } from '../../context/AuthContext';
-import { useHistory } from 'react-router-dom';
+import { useHistory,Link } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 
 
-export default function SideBar({viewState,chatSwitch,hide,socket}) {
+export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRoute}) {
     const {username,avatar,load} = useContext(UserContext);
     const auth = useContext(AuthContext)
     const history = useHistory()
+    // if(!chats[chat]) chats[chat] = {}
     const logoutHandler = e =>{
         e.preventDefault()
         socket.emit('logout')
         auth.logout()
         history.push('/')
     }
+    const getLastMessage = (chat)=>{
+        if(!chats[chat]) return ''
+        if(!chats[chat].last) return ''
+        if(chats[chat].last.username === username) return `Ты: ${chats[chat].last.text}` 
+        return `${chats[chat].last.username}: ${chats[chat].last.text}`
+    }
     // useEffect(()=>{
     //     // console.log(user)
     // },[user])
+
+    // const noop = () =>{}
+    
     return (
         <div id="side-bar" className={viewState ? " " : "side-bar-hide"} 
         style={hide ? {zIndex:-1}:{zIndex:0}}
@@ -31,9 +43,21 @@ export default function SideBar({viewState,chatSwitch,hide,socket}) {
                         > <IoIosArrowBack/> </div>
 						<div className="app-name">TwiChat v0.8</div>
                         <div className="menu">
-                        <IconContext.Provider value={{ color: "white", size:"20px" }}>
-                            <IoIosPerson className="react-button"/>
-                        </IconContext.Provider>
+                        {
+                            chatRoute ? 
+                            <IconContext.Provider value={{ color: "white", size:"20px" }}>
+                            <Link onClick={()=>{chatSwitch()}} to="/profile">
+                                <IoIosPerson className="react-button"/>
+                            </Link>
+                            </IconContext.Provider>
+                            :
+                            <IconContext.Provider value={{ color: "white", size:"20px" }}>
+                            <Link onClick={()=>{chatSwitch()}} to="/chat">
+                                <FaComments className="react-button"/>
+                            </Link>
+                            </IconContext.Provider>
+                        }
+                        
                         </div>
 					</div>
 					{/* <div className="search">
@@ -55,7 +79,7 @@ export default function SideBar({viewState,chatSwitch,hide,socket}) {
                             <div className="user-photo">{"C"}</div>
                             <div className="user-info">
                                 <div className="name">{"Community"}</div>
-                                <div className="last-message">{"Последнее сообщение"}</div>
+                                <div className="last-message">{getLastMessage('community')}</div>
                             </div>
                             
                         </div>
