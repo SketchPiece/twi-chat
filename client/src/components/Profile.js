@@ -50,7 +50,8 @@ export default function Profile() {
                         <Friend />
                         <Friend />
                         <Friend />
-                        {/* <Friend /> */}
+                        <Friend />
+                        <Friend />
 
                     </div>
                     <div className="friends-footer"></div>
