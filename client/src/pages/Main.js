@@ -125,7 +125,7 @@ export default function Main({chatRoute}) {
 
     return (
         <UserContext.Provider value={{ username: user.username, avatar: user.avatar, userId:user.userId,load:user.load }} >
-            <link rel="stylesheet" href="/themes/Dark.css"/>
+            <link rel="stylesheet" href="/themes/Light.css"/>
             <div className="container">
                 { chatRoute ?
                 <Animated style={width<=510 ? {width:"100%",height:"100%"} :  {width:"76.25%",height:"100%"}} animationIn="slideInLeft" animationOut="slideOutLeft" animationInDuration={400} animationOutDuration={400} isVisible={isChat} animateOnMount={false}> 
