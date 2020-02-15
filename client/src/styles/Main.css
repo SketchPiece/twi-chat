@@ -1,5 +1,4 @@
 .container {
-  color: white;
   display: flex;
   align-items: flex-start;
   height: 100%;
@@ -8,12 +7,9 @@
 input[type='text'],
 textarea {
   font-family: Arial;
-  background-color: #262626;
-  color: #fff;
   font-size: 16px;
 }
 .container {
-  color: white;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -37,10 +33,8 @@ textarea {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background: #222222;
 }
 #side-bar .search {
-  background: #3e3e5e;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -48,7 +42,6 @@ textarea {
   align-items: center;
   border-width: 1px 0;
   border-style: solid;
-  border-color: black;
   padding-left: 15px;
   padding-right: 20px;
   height: 10vh;
@@ -60,17 +53,14 @@ textarea {
 }
 #side-bar .search input {
   width: 100%;
-  background: #3e3e5e;
   flex-grow: 1;
   box-sizing: border-box;
   border: none;
-  color: #cac8ee;
 }
 #side-bar .search input:focus {
   outline: none;
 }
 #side-bar .search input::placeholder {
-  color: #cac8ee;
   opacity: 0.6;
 }
 #side-bar .search .plus {
@@ -84,7 +74,6 @@ textarea {
 #side-bar .search .plus::before {
   content: "";
   position: absolute;
-  background: #b3b2ca;
 }
 #side-bar .search .plus::after {
   width: 16px;
@@ -100,19 +89,11 @@ textarea {
 #side-bar .users {
   overflow-y: scroll;
   overflow: auto;
-  background: #252525;
   flex-grow: 1;
-}
-#side-bar .users::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #151515;
 }
 #side-bar .users::-webkit-scrollbar {
   width: 5px;
-  background-color: black;
-}
-#side-bar .users::-webkit-scrollbar-thumb {
-  background-color: #777;
+
 }
 #side-bar .users .user {
   align-items: center;
@@ -120,10 +101,6 @@ textarea {
   height: 66px;
   justify-content: flex-start;
   padding: 18px 16px;
-}
-#side-bar .users .user.active,
-#side-bar .users .user:hover {
-  background: #202020;
 }
 #side-bar .users .user:hover:not(.active) {
   cursor: pointer;
@@ -144,7 +121,6 @@ textarea {
 }
 #side-bar .current-user {
   align-items: center;
-  background: #222222;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -166,7 +142,6 @@ textarea {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: #393939 2px solid;
 }
 
 #side-bar .user-container{
@@ -179,7 +154,6 @@ textarea {
 }
 
 .chat-header {
-  background: #393939;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -232,7 +206,6 @@ textarea {
   justify-content: center;
   z-index: +1;
   height: 0px;
-  background-color: #151515;
   width: 70%;
 }
 
@@ -244,7 +217,6 @@ textarea {
 }
 
 #scrollBottom{
-  background-color: #262626;
   border: none;
   width: 45px;
   height: 45px;
@@ -253,9 +225,6 @@ textarea {
   outline: none;
   border-radius: 50%;
   padding-top: 5px;
-}
-#scrollBottom:hover{
-  background-color: #202020;
 }
 @media screen and (max-width: 510px) {
   #scrollBottom{
@@ -317,26 +286,15 @@ textarea {
   flex-grow: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #151515;
-}
-.thread-container::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #151515;
 }
 .thread-container::-webkit-scrollbar {
   width: 5px;
-  background-color: white;
-}
-.thread-container::-webkit-scrollbar-thumb {
-  background-color: #777;
 }
 .thread-container .thread {
   position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
-  color: white;
-  background: #151515;
 }
 .message-container{
   display: flex;
@@ -361,7 +319,6 @@ textarea {
   width: 65px;
   height: 65px;
   border-radius: 50%;
-  border: 2px solid #252525;
   z-index: +1;
 }
 
@@ -375,13 +332,10 @@ textarea {
   min-width: 160px;
   margin-top: 15px;
   border-radius: 5px;
-  color: white;
-  background: #313131;
   padding: 10px 20px 10px 90px;
 }
 .message-container .name{
   margin-left: 80px;
-  color: white;
   font-size: 12px;
   font-family: monospace;
 }
@@ -404,7 +358,6 @@ textarea {
 }
 .me .message{
     padding: 10px 90px 10px 20px;
-    background: #505050;
 }
 .me .name{
   margin: 0;
@@ -413,8 +366,6 @@ textarea {
 }
 
 .message-input {
-  background: #151515;
-  color: white;
   box-sizing: border-box;
   height: 10vh;
   max-height: 65px;
@@ -436,16 +387,9 @@ textarea {
   height: 100%;
   border: none;
 }
-.message-input .message-form .form-control::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  background-color: #151515;
-}
+
 .message-input .message-form .form-control::-webkit-scrollbar {
   width: 5px;
-  background-color: black;
-}
-.message-input .message-form .form-control::-webkit-scrollbar-thumb {
-  background-color: #777;
 }
 .message-input .message-form .form-control:focus {
   outline: none;
@@ -457,8 +401,6 @@ textarea {
   text-align: center;
   border: none;
   height: 100%;
-  color: #fff;
-  background: #2e2e2e;
   transition: all 0.35s ease-out;
   outline: none;
   cursor: pointer;
@@ -466,11 +408,6 @@ textarea {
 .message-input .message-form .send:disabled {
   opacity: 0.2;
 }
-
-.message-input .message-form .send:active {
-  background: #202020;
-}
-
 
 .loading{
   display: flex;
