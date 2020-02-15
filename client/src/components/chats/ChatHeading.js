@@ -5,11 +5,11 @@ import React from 'react'
 
 import { IoMdMail } from "react-icons/io";
 
-export default function ChatHeading({barSwitch}) {
+export default function ChatHeading({title,barSwitch}) {
     return (
         <div className="chat-header">
 			<div className="user-info">
-				<div className="user-name">Community</div>
+				<div className="user-name">{title}</div>
 				{/* <div className="status">
 					<div className="indicator"></div>
 					<span></span>

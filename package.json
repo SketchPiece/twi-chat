@@ -39,6 +39,7 @@
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.8.11",
+    "react-timer-hook": "^2.0.0",
     "socket.io": "^2.3.0"
   }
 }

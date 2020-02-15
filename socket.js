@@ -38,9 +38,26 @@ const socket = (server) => {
             socket.in(socket.userId).emit("reload")
         })
         socket.on('send_message',({text,username,userId,chat})=>{
-            // console.log(text,chat)
-            io.in(chat).emit('push_message',{text,username,userId})
+            // console.log(username,text)
+            io.in(chat).emit('push_message',{text,username,userId,chat})
         })
+        socket.on('send_typing_on',({username,chat})=>{
+            // console.log(username,chat,'typing...')
+            io.in(chat).emit('push_typing_on',{username,chat})
+            // io.in(chat).emit('push_message',{text,username,userId,chat})
+        })
+        socket.on('send_typing_off',({username,chat})=>{
+            // console.log(username,chat,'off typing...')
+            io.in(chat).emit('push_typing_off',{username,chat})
+        })
+
+
+
+
+        socket.on('disconnect', () => {
+            console.log(user.username,'disconnected')
+            // io.emit('push_typing_off',user.username)
+        });
     })
     
     return io

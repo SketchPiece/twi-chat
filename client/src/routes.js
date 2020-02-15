@@ -2,15 +2,20 @@ import React from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
 // import Chat from './pages/Chat'
 import Login from './pages/Login'
-import Chat from './pages/Chat'
 import Register from './pages/Register'
+// import Wrapper from './Wrapper'
+import Main from './pages/Main'
+
 
 export const useRoutes = isAuthenticated =>{
     if(isAuthenticated){
         return(
             <Switch>
                 <Route path='/chat' exact>
-                    <Chat />
+                    <Main chatRoute={true} />
+                </Route>
+                <Route path='/profile' exact>
+                    <Main chatRoute={false} />
                 </Route>
                 <Redirect to="/chat" />
             </Switch>
