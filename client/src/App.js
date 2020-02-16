@@ -15,7 +15,7 @@ function App() {
   
 
   if(!ready){
-    return <Loader/>
+    return <Loader loader="main"/>
   }
 
   return (

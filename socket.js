@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const config = require('config')
 const {ObjectId} = require('mongoose').Types
 const User = require("./models/User")
+const Message = require("./models/Message")
 
 const socket = (server) => {
     const io = require('socket.io')(server, {
@@ -30,8 +31,15 @@ const socket = (server) => {
     .on('connection',async (socket)=>{
         if(socket.authError) return socket.emit('logout')
         const user = await User.findOne({_id: new ObjectId(socket.userId)})
-        socket.emit("user_info",{username:user.username,avatar:user.avatar,userId:socket.userId})
-        console.log(user.username,'connected')
+        socket.emit("load_user_info",{username:user.username,avatar:user.avatar,userId:socket.userId,status:user.status})
+        let messages = await Message.find({chat:'community'}).exec();
+        // messages = messages.sort(function(a,b){
+        //     return new Date(b.created) - new Date(a.created);
+        // })
+        // console.log(messages)
+        socket.emit('load_messages', messages);
+
+        // console.log(user.username,'connected')
         socket.join(socket.userId);
         socket.join('community')
         socket.on('logout',() => {
@@ -40,6 +48,8 @@ const socket = (server) => {
         socket.on('send_message',({text,username,userId,chat})=>{
             // console.log(username,text)
             io.in(chat).emit('push_message',{text,username,userId,chat})
+            let message = new Message({username,userId,text,chat})
+            message.save()
         })
         socket.on('send_typing_on',({username,chat})=>{
             // console.log(username,chat,'typing...')
@@ -49,6 +59,12 @@ const socket = (server) => {
         socket.on('send_typing_off',({username,chat})=>{
             // console.log(username,chat,'off typing...')
             io.in(chat).emit('push_typing_off',{username,chat})
+        })
+        socket.on('change_status',async ({status})=>{
+            const user = await User.findOne({_id: new ObjectId(socket.userId)})
+            // console.log(socket.userId,'change_status',status)
+            user.status = status
+            user.save()
         })
 
 

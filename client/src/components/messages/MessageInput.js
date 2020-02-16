@@ -93,7 +93,7 @@ export default function MessageInput({visibleButton,socket,chat,typing}) {
         if(!text) return 
         setInputText('')
         socket.emit('send_message',{text,username,userId,chat})
-        console.log('send')
+        // console.log('send')
     }
 
     const scrollDownHandler = () =>{

@@ -3,28 +3,28 @@ import Message from './Message'
 import { UserContext } from '../../context/UserContext';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import {ToBottom} from '../../scripts/extra'
+import Loader from '../Loader';
 
-export default function Messages({setVisibleButton,messages}) {
-    const [loading
-        // ,setLoading
-    ] = useState(false);
+export default function Messages({setVisibleButton,messages,loading}) {
     const [isBottom, setIsBottom] = useState(true)
+    const [messCount,setMessCount] = useState(0)
 
     let user = useContext(UserContext)
 
     useEffect(() => {
         ToBottom()
         // setVisibleButton(false)
-    }, [])
+    },[])
 
     useEffect(() => {
-        // let lastMsg = messages.pop()
-        if(messages.length!==0){
-            // console.log(messages[messages.length-1])
-            if(messages[messages.length-1].username === user.username) ToBottom()
+        // let lastMsg = messages.pop() 
+        // if(messages.length!==0){
             // console.log(isBottom)
-            if(isBottom) ToBottom()
-        }
+            // console.log(messages[messages.length-1])
+            
+            // console.log(isBottom)
+            // if(isBottom && messages.length!== messCount) ToBottom()
+        // }
         // let msgs = messages
         // console.log(msgs.pop())
         // setVisibleButton(false)
@@ -34,6 +34,16 @@ export default function Messages({setVisibleButton,messages}) {
         // console.log(scrollMax,scroll)
     }, [messages,isBottom,user])
     
+    useEffect(() => {
+        // setMessCount(messages.length)
+        // console.log('новое сообщение!')
+        if(messCount !== messages.length){
+            // console.log("новое сообщение")
+            setMessCount(messages.length)
+            if(messages[messages.length-1].username === user.username) ToBottom()
+            if(isBottom) ToBottom()
+        }
+    }, [messages])
 
     // useEffect(() => {
     //     effect
@@ -64,9 +74,7 @@ export default function Messages({setVisibleButton,messages}) {
 
         <div className="thread-container" id="msgs" onScroll={scrollHandler}>
             { loading ? (
-                <div className="loading">
-                    Loading...
-                </div>
+                <Loader loader="messages" />
             ) : (
 				<div className="thread" id="msgsInner">
                     <ReactCSSTransitionGroup
