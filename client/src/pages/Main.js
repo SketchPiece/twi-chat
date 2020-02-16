@@ -21,13 +21,12 @@ export default function Main({chatRoute}) {
     const [visibleButton, setVisibleButton] = useState(false)
     const history = useHistory()
     const [user, setUser] = useState({
-        username:'',avatar:'',userId:'',load:true
+        username:'',avatar:'',userId:'',status:'',load:true
     })
     const [chat] = useState('community')
-    
+    const [loadMessages,setLoadMessages] = useState(true)
     const [chats, setChats] = useState({})
     const [typingChats,setTypingChats] = useState({})
-
     const [width] = useWindowSize()
     
     const [socket] = useSocket({
@@ -48,8 +47,18 @@ export default function Main({chatRoute}) {
             auth.logout()
             history.push('/')
         })
-        socket.on('user_info',(user)=>{
+        socket.on('load_user_info',(user)=>{
             setUser({...user,load:false})
+        })
+        socket.on('load_messages',(msgs)=>{
+            // console.log(msgs)
+            let messages = []
+            for(let i = 0;i<msgs.length;i++){
+                messages.push({username:msgs[i].username,userId:msgs[i].userId,text:msgs[i].text})
+            }
+            setLoadMessages(false)
+            setChats({['community']:{messages:[...messages],last:false,typing:[]}})
+            
         })
         socket.on('push_message',({chat,username,userId,text})=>{
             let message = {username,userId,text}
@@ -61,10 +70,10 @@ export default function Main({chatRoute}) {
                 textLast += '...';
             }
             setChats({...chats,[chat]:{messages:[...currentMessages,message],last:{...message,text:textLast},typing:[...currentTyping]}})
-            console.log('Получено',message)
+            // console.log('Получено',message)
         })
         socket.on('push_typing_on',({username,chat})=>{
-            console.log(username,chat,'typing...')
+            // console.log(username,chat,'typing...')
             // let currentMessages = chats[chat] ? chats[chat].messages : []
             // let lastMessage = chats[chat] ? chats[chat].last : null
             let currentTyping = typingChats[chat] ? typingChats[chat] : []
@@ -107,7 +116,8 @@ export default function Main({chatRoute}) {
 
     useEffect(()=>{
         socket.connect();
-    })
+        console.log('connect')
+    },[socket])
     
     function viewSwitch(){
         if(width>510) return
@@ -121,17 +131,21 @@ export default function Main({chatRoute}) {
         setIsChat(!isChat)
     }
 
+    const setStatus = (status) => {
+        setUser({...user, status})
+    }
+
     
 
     return (
-        <UserContext.Provider value={{ username: user.username, avatar: user.avatar, userId:user.userId,load:user.load }} >
+        <UserContext.Provider value={{ username: user.username, avatar: user.avatar, userId:user.userId,status:user.status,load:user.load }} >
             <div className="container">
                 { chatRoute ?
                 <Animated style={width<=510 ? {width:"100%",height:"100%"} :  {width:"76.25%",height:"100%"}} animationIn="slideInLeft" animationOut="slideOutLeft" animationInDuration={400} animationOutDuration={400} isVisible={isChat} animateOnMount={false}> 
                 <div style={{width:"100%"}} className={"chat-room-container" + (!hide ? " chat-active": " chat-hide")}>
                     <div className="chat-room">
                         <ChatHeading title={"Community"} barSwitch={viewSwitch} />
-                        <Messages messages={chats[chat] ? chats[chat].messages : []} setVisibleButton={setVisibleButton} visibleButton={visibleButton} />
+                        <Messages messages={chats[chat] ? chats[chat].messages : []} setVisibleButton={setVisibleButton} visibleButton={visibleButton} loading={loadMessages} />
                         <MessageInput typing={typingChats} chat={chat} socket={socket} visibleButton={visibleButton} />
                     </div>
                 </div>
@@ -141,7 +155,7 @@ export default function Main({chatRoute}) {
                 <div style={{width:"100%"}} className={"chat-room-container" + (!hide ? " chat-active": " chat-hide")}>
                     <div className="chat-room">
                         <ChatHeading title={"Профиль"} barSwitch={viewSwitch} />
-                        <Profile />
+                        <Profile setStatus={setStatus} socket={socket} />
                         {/* <Messages messages={chats[chat] ? chats[chat].messages : []} setVisibleButton={setVisibleButton} visibleButton={visibleButton} /> */}
                         {/* <MessageInput typing={typingChats} chat={chat} socket={socket} visibleButton={visibleButton} /> */}
                     </div>
