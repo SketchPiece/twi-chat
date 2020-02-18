@@ -7,16 +7,20 @@ import { useRoutes } from './routes';
 import { useAuth } from './hooks/auth.hook';
 import Loader from './components/Loader';
 import { AuthContext } from './context/AuthContext';
+// import EasterEgg from './components/EasterEgg';
+
 
 function App() {
   const {token,login,logout,reload,userId,ready} = useAuth()
   const isAuthenticated = !!token;
   const routes = useRoutes(isAuthenticated);
-  
+
 
   if(!ready){
     return <Loader loader="main"/>
   }
+
+  
 
   return (
     <AuthContext.Provider value={{

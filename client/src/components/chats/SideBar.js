@@ -2,6 +2,7 @@ import React, { useContext} from 'react'
 // import User from './User'
 import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
 import { FaComments } from 'react-icons/fa'
+import {getAvatarUrl} from '../../scripts/extra'
 
 import { IconContext } from "react-icons";
 import { AuthContext } from '../../context/AuthContext';
@@ -41,7 +42,7 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
                         id="back"
                         onClick={()=>{chatSwitch()}}
                         > <IoIosArrowBack/> </div>
-						<div className="app-name">TwiChat v0.8</div>
+						<div className="app-name">TwiChat v0.8 Beta</div>
                         <div className="menu">
                         {
                             chatRoute ? 
@@ -98,7 +99,9 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
 					</div>
 					<div className="current-user">
                         <div className="user-container">
-                        <img className={ "avatar"+(!load ? " animated slideInRight" : ' none')} src={avatar} alt="avatar"/>
+                            <Link to='/profile'>
+                            <img className={ "avatar"+(!load ? " animated slideInRight" : ' none')} src={getAvatarUrl(avatar,54)} alt="avatar"/>
+                            </Link>
 						<span className={ "username"+(!load ? " animated slideInRight" : ' none')}>{username}</span> 
                         </div>
                         <IconContext.Provider value={{ color: "white", size:"20px" }}>

@@ -12,9 +12,13 @@ const schema = new Schema({
     },
     avatar:{
         type:String,
-        default:"/images/default.png"
+        default:"v1581973009/w1xcn5v6tl80hw72lpts.png"
     },
     status:{
+        type:String,
+        default:""
+    },
+    tag:{
         type:String,
         default:""
     }

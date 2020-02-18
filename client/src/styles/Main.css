@@ -314,12 +314,14 @@ textarea {
   }
 }
 
-
+.message-container .avatarFront{
+  z-index: +1;
+}
 .message-container img{
   width: 65px;
   height: 65px;
   border-radius: 50%;
-  z-index: +1;
+  /* cursor: pointer; */
 }
 
 .message-container .data{

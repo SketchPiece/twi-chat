@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom'
 import { Animated } from "react-animated-css";
 import { useHttp } from '../hooks/http.hook';
 import { AuthContext } from '../context/AuthContext';
+// import {useHistory} from 'react-router-dom'
 // import { randomAnimation } from '../scripts/extra'
 
 export default function Register() {
     const auth = useContext(AuthContext);
-    
+    // const history = useHistory()
+
     const [form, setForm] = useState({
         username:"",password:"",repPassword:""
     })
@@ -77,6 +79,7 @@ export default function Register() {
             const data = await request('/api/auth/register','POST', {...form})
             // console.log('data',data)
             auth.login(data.token,data.userId,data.username)
+            
 
             // message(data.message)
             // console.log()
