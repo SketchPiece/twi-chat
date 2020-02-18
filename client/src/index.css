@@ -24,3 +24,12 @@ body,
 .none{
   display: none;
 }
+
+.easter-egg{
+  width: 100%;
+  background-color: #010001;  
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+}

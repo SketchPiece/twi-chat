@@ -6,10 +6,10 @@ import { UserContext } from '../../context/UserContext';
 import { useTimer } from 'react-timer-hook';
 // import {ToBottom} from '../../scripts/extra'
 
-export default function MessageInput({visibleButton,socket,chat,typing}) {
+export default function MessageInput({visibleButton,socket,chat,typing,load}) {
     const [inputText,setInputText] = useState("");
     const [type, setType] = useState('')
-    const {username,userId} = useContext(UserContext)
+    const {username,userId,avatar} = useContext(UserContext)
     // typing = typing[chat] ? typing[chat] : [] 
 
 
@@ -57,6 +57,8 @@ export default function MessageInput({visibleButton,socket,chat,typing}) {
     // }
     const keyUpHandler = (e) => {
         // console.log('keyUp')
+        if(load) return
+
         if(e.key==="Enter") return;
         socket.emit('send_typing_on',{username,chat})
         const time = new Date()
@@ -74,6 +76,7 @@ export default function MessageInput({visibleButton,socket,chat,typing}) {
         if(!(e.key==="Enter" && e.shiftKey)){
             if(e.key==="Enter"){
                 e.preventDefault()
+                if(load) return
                 // e.preventDefault()
                 sendMessage(inputText)
             }
@@ -92,7 +95,8 @@ export default function MessageInput({visibleButton,socket,chat,typing}) {
         socket.emit('send_typing_off',{username,chat})
         if(!text) return 
         setInputText('')
-        socket.emit('send_message',{text,username,userId,chat})
+        // console.log(avatar)
+        socket.emit('send_message',{text,username,userId,avatar,chat})
         // console.log('send')
     }
 
@@ -148,7 +152,7 @@ export default function MessageInput({visibleButton,socket,chat,typing}) {
                             onKeyUp={keyUpHandler}
                             />
                         <button
-                            // disabled = {false} 
+                            disabled = {load} 
                             // { message.length < 1 }
                             type = "submit"
                             className = "send"

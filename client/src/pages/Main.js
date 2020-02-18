@@ -12,9 +12,12 @@ import {useHistory} from 'react-router-dom'
 import {UserContext} from '../context/UserContext'
 import useSocket from 'use-socket.io-client'
 import Profile from '../components/Profile'
+import EasterEgg from '../components/EasterEgg'
+import OtherProfile from '../components/OtherProfile'
+// import Profile2 from '../components/Profile2'
 // import { set } from 'mongoose'
 
-export default function Main({chatRoute}) {
+export default function Main({chatRoute,otherProfile}) {
     const auth = useContext(AuthContext)
     const [isChat,setIsChat] = useState(true)
     const [hide, setHide] = useState(false)
@@ -28,6 +31,8 @@ export default function Main({chatRoute}) {
     const [chats, setChats] = useState({})
     const [typingChats,setTypingChats] = useState({})
     const [width] = useWindowSize()
+    const [easterEgg, setEasterEgg] = useState(false)
+    const [usersProfile, setUsersProfile] = useState({})
     
     const [socket] = useSocket({
         query: {
@@ -38,7 +43,7 @@ export default function Main({chatRoute}) {
 
     useEffect(()=>{
         socket.on('connect',()=>{
-            console.log("Connected")
+            // console.log("Connected")
         })
         socket.on('reload', ()=>{
             auth.reload()
@@ -50,18 +55,30 @@ export default function Main({chatRoute}) {
         socket.on('load_user_info',(user)=>{
             setUser({...user,load:false})
         })
-        socket.on('load_messages',(msgs)=>{
+        socket.on('load_messages',(messages) =>{
             // console.log(msgs)
-            let messages = []
-            for(let i = 0;i<msgs.length;i++){
-                messages.push({username:msgs[i].username,userId:msgs[i].userId,text:msgs[i].text})
-            }
+            // let messages = []
+            // for(let i = 0;i<msgs.length;i++){
+            //     messages.push({username:msgs[i].username,userId:msgs[i].userId,text:msgs[i].text})
+            // }
+            
             setLoadMessages(false)
-            setChats({['community']:{messages:[...messages],last:false,typing:[]}})
+            let last = null
+            if(messages.length > 0){
+                let text = messages[messages.length-1].text
+                let textLast = text.slice(0,15);
+                if (textLast.length < text.length) {
+                    textLast += '...';
+                }
+                last = {...messages[messages.length-1],text:textLast}
+            }
+            let chat = 'community'
+            setChats({[chat]:{messages:[...messages],last,typing:[]}})
             
         })
-        socket.on('push_message',({chat,username,userId,text})=>{
-            let message = {username,userId,text}
+        socket.on('push_message',({chat,username,userId,text,avatar})=>{
+            // console.log(avatar)
+            let message = {username,userId,text,avatar}
             let currentMessages = chats[chat] ? chats[chat].messages : []
             let currentTyping = chats[chat] ? chats[chat].typing : []
 
@@ -105,6 +122,18 @@ export default function Main({chatRoute}) {
             setTypingChats({...typingChats,[chat]:currentTyping})
             // console.log(obj)
         })
+        socket.on('push_other_user',({exist,userId,username,status,avatar,tag})=>{
+            // console.log(test)
+            // console.log(userId,exist)
+            
+            if(!exist) {
+                // console.log()
+                return setUsersProfile({...usersProfile,[userId]:{exist:false}})   
+            }
+            setUsersProfile({...usersProfile,[userId]:{exist:true,username,status,avatar,tag}})
+
+            // console.log(username,status,avatar)
+        })
 
         return(
             ()=>{
@@ -112,11 +141,11 @@ export default function Main({chatRoute}) {
             }
         )
         // setSocket(ioSocket)
-    },[socket,chats,history,auth,user,typingChats])
+    },[socket,chats,history,auth,user,typingChats,usersProfile])
 
     useEffect(()=>{
         socket.connect();
-        console.log('connect')
+        // console.log('connect')
     },[socket])
     
     function viewSwitch(){
@@ -135,11 +164,17 @@ export default function Main({chatRoute}) {
         setUser({...user, status})
     }
 
-    
+    const setAvatar = (avatar) => {
+        setUser({...user, avatar})
+    }
+
+    if(easterEgg){
+        return <EasterEgg />
+    }
 
     return (
-        <UserContext.Provider value={{ username: user.username, avatar: user.avatar, userId:user.userId,status:user.status,load:user.load }} >
-            <link rel="stylesheet" href="/themes/Light.css"/>
+        <UserContext.Provider value={{ username: user.username, avatar: user.avatar, userId:user.userId,status:user.status,tag:user.tag,load:user.load }} >
+            <link rel="stylesheet" href="/themes/Dark.css"/>
             <div className="container">
                 { chatRoute ?
                 <Animated style={width<=510 ? {width:"100%",height:"100%"} :  {width:"76.25%",height:"100%"}} animationIn="slideInLeft" animationOut="slideOutLeft" animationInDuration={400} animationOutDuration={400} isVisible={isChat} animateOnMount={false}> 
@@ -147,7 +182,7 @@ export default function Main({chatRoute}) {
                     <div className="chat-room">
                         <ChatHeading title={"Community"} barSwitch={viewSwitch} />
                         <Messages messages={chats[chat] ? chats[chat].messages : []} setVisibleButton={setVisibleButton} visibleButton={visibleButton} loading={loadMessages} />
-                        <MessageInput typing={typingChats} chat={chat} socket={socket} visibleButton={visibleButton} />
+                        <MessageInput load={loadMessages} typing={typingChats} chat={chat} socket={socket} visibleButton={visibleButton} />
                     </div>
                 </div>
                 </Animated>
@@ -156,9 +191,12 @@ export default function Main({chatRoute}) {
                 <div style={{width:"100%"}} className={"chat-room-container" + (!hide ? " chat-active": " chat-hide")}>
                     <div className="chat-room">
                         <ChatHeading title={"Профиль"} barSwitch={viewSwitch} />
-                        <Profile setStatus={setStatus} socket={socket} />
-                        {/* <Messages messages={chats[chat] ? chats[chat].messages : []} setVisibleButton={setVisibleButton} visibleButton={visibleButton} /> */}
-                        {/* <MessageInput typing={typingChats} chat={chat} socket={socket} visibleButton={visibleButton} /> */}
+                        {
+                            !otherProfile ?
+                            <Profile setAvatar={setAvatar} setEasterEgg={setEasterEgg} setStatus={setStatus} socket={socket} />
+                            :
+                            <OtherProfile usersProfile={usersProfile} setEasterEgg={setEasterEgg} socket={socket} />
+                        }
                     </div>
                 </div>
                 </Animated>

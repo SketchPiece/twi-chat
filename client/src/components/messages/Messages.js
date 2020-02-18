@@ -43,7 +43,7 @@ export default function Messages({setVisibleButton,messages,loading}) {
             if(messages[messages.length-1].username === user.username) ToBottom()
             if(isBottom) ToBottom()
         }
-    }, [messages])
+    }, [messages,user,messCount,isBottom])
 
     // useEffect(() => {
     //     effect
@@ -92,7 +92,7 @@ export default function Messages({setVisibleButton,messages,loading}) {
                     {
                         messages.map((msg, index)=>{               
                             // console.log(user.userId===msg.userId)            
-                            return <Message className="fast" key={index} message={msg.text} me={user.userId === msg.userId ? true : false} name={msg.username} img={"https://cdn.discordapp.com/avatars/578197813821833227/ca27c52873bb1c3ee33aca4fbc0a09bf.png?size=256"} />
+                            return <Message className="fast" key={index} message={msg.text} me={user.userId === msg.userId ? true : false} name={msg.username} avatarId={msg.avatar} userId={msg.userId} />
                         })
                     }
                     </ReactCSSTransitionGroup>

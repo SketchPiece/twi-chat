@@ -36,8 +36,15 @@ router.post(
         //     config.get('jwtSecret'),
         //     {expiresIn:'1h'}
         // )
+        const token = jwt.sign(
+            { userId: user.id },
+            config.get('jwtSecret'),
+            {expiresIn:'1h'}
+        )
 
-        res.status(201).json({message:'Пользователь создан'})
+        res.json({token,userId:user.id,username:user.username,avatar:user.avatar})
+
+        // res.status(201).json({message:'Пользователь создан'})
 
     }catch{
         res.status(500).json({status:"error",message: e})
