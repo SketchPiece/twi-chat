@@ -91,7 +91,7 @@
 }
 
 .data-wrapper .confirmed {
-    background-color: rgb(133, 9, 145);
+    background-color: #716DA6;
     /* width: 25px; */
     /* height: 25px; */
     font-size: 20px;
@@ -239,7 +239,7 @@
 
 .requests-container{
     overflow-y: auto;
-    max-height: 100px;
+    max-height: 135px;
 }
 
 .requests-container .request button{

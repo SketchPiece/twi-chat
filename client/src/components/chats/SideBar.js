@@ -1,5 +1,4 @@
 import React, { useContext} from 'react'
-// import User from './User'
 import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
 import { FaComments } from 'react-icons/fa'
 import {getAvatarUrl} from '../../scripts/extra'
@@ -14,7 +13,6 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
     const {username,avatar,load} = useContext(UserContext);
     const auth = useContext(AuthContext)
     const history = useHistory()
-    // if(!chats[chat]) chats[chat] = {}
     const logoutHandler = e =>{
         e.preventDefault()
         socket.emit('logout')
@@ -27,11 +25,6 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
         if(chats[chat].last.username === username) return `Ты: ${chats[chat].last.text}` 
         return `${chats[chat].last.username}: ${chats[chat].last.text}`
     }
-    // useEffect(()=>{
-    //     // console.log(user)
-    // },[user])
-
-    // const noop = () =>{}
     
     return (
         <div id="side-bar" className={viewState ? " " : "side-bar-hide"} 
@@ -61,21 +54,12 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
                         
                         </div>
 					</div>
-					{/* <div className="search">
-						<i className="search-icon"></i>
-						<input placeholder="Search" type="text"/>
-						<div className="plus"></div>
-					</div> */}
 					<div 
 						className="users" 
-						// ref='users' 
-						// onClick={(e)=>{ (e.target === this.refs.user) && setActiveChat(null) }}
                         >
                         
                         <div 
-                            // key={chat.id} 
                             className={`user active`}
-                            // onClick={ ()=>{ setActiveChat(chat) } }
                             >
                             <div className="user-photo">{"C"}</div>
                             <div className="user-info">
@@ -84,17 +68,6 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
                             </div>
                             
                         </div>
-						
-                        {/* <User username={"MasterTime"} /> */}
-                        {/* <User username={"MasterTime"} />
-                        <User username={"MasterTime"} />
-                        <User username={"MasterTime"} />
-                        <User username={"MasterTime"} />
-                        <User username={"MasterTime"} />
-                        <User username={"MasterTime"} />
-                        <User username={"MasterTime"} />
-                        <User username={"MasterTime"} />
-                        <User username={"MasterTime"} /> */}
 						
 					</div>
 					<div className="current-user">

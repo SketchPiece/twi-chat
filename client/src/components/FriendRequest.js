@@ -1,12 +1,20 @@
 import React from 'react'
 
-export default function FriendRequest() {
+export default function FriendRequest({username,userId,requestHandler}) {
+    const acceptHandler = () =>{
+        requestHandler(userId,true)
+    }
+
+    const rejectHandler = () =>{
+        requestHandler(userId,false)
+    }
+
     return (
         <div className="request">
-            <span>Пользователь Andrey хочет добавить вас в друзья</span>
+            <span>Пользователь {username} хочет добавить вас в друзья</span>
             <div className="buttons">
-                <button className="accept">Подтвердить</button>
-                <button className="cansel">Отклонить</button>
+                <button onClick={acceptHandler} className="accept">Подтвердить</button>
+                <button onClick={rejectHandler} className="cansel">Отклонить</button>
             </div>
         </div>
     )

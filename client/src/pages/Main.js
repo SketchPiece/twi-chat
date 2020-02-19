@@ -6,7 +6,6 @@ import MessageInput from '../components/messages/MessageInput'
 import '../styles/Main.css'
 import { Animated } from 'react-animated-css'
 import { useWindowSize } from '../hooks/winsize.hook'
-// import io from 'socket.io-client'
 import { AuthContext } from '../context/AuthContext'
 import {useHistory} from 'react-router-dom'
 import {UserContext} from '../context/UserContext'
@@ -14,8 +13,6 @@ import useSocket from 'use-socket.io-client'
 import Profile from '../components/Profile'
 import EasterEgg from '../components/EasterEgg'
 import OtherProfile from '../components/OtherProfile'
-// import Profile2 from '../components/Profile2'
-// import { set } from 'mongoose'
 
 export default function Main({chatRoute,otherProfile}) {
     const auth = useContext(AuthContext)
@@ -33,6 +30,9 @@ export default function Main({chatRoute,otherProfile}) {
     const [width] = useWindowSize()
     const [easterEgg, setEasterEgg] = useState(false)
     const [usersProfile, setUsersProfile] = useState({})
+    const [friendRequests, setFriendRequests] = useState([])
+    const [friends, setFriends] = useState([])
+
     
     const [socket] = useSocket({
         query: {
@@ -55,13 +55,7 @@ export default function Main({chatRoute,otherProfile}) {
         socket.on('load_user_info',(user)=>{
             setUser({...user,load:false})
         })
-        socket.on('load_messages',(messages) =>{
-            // console.log(msgs)
-            // let messages = []
-            // for(let i = 0;i<msgs.length;i++){
-            //     messages.push({username:msgs[i].username,userId:msgs[i].userId,text:msgs[i].text})
-            // }
-            
+        socket.on('load_messages',(messages) =>{            
             setLoadMessages(false)
             let last = null
             if(messages.length > 0){
@@ -77,7 +71,6 @@ export default function Main({chatRoute,otherProfile}) {
             
         })
         socket.on('push_message',({chat,username,userId,text,avatar})=>{
-            // console.log(avatar)
             let message = {username,userId,text,avatar}
             let currentMessages = chats[chat] ? chats[chat].messages : []
             let currentTyping = chats[chat] ? chats[chat].typing : []
@@ -87,12 +80,8 @@ export default function Main({chatRoute,otherProfile}) {
                 textLast += '...';
             }
             setChats({...chats,[chat]:{messages:[...currentMessages,message],last:{...message,text:textLast},typing:[...currentTyping]}})
-            // console.log('Получено',message)
         })
         socket.on('push_typing_on',({username,chat})=>{
-            // console.log(username,chat,'typing...')
-            // let currentMessages = chats[chat] ? chats[chat].messages : []
-            // let lastMessage = chats[chat] ? chats[chat].last : null
             let currentTyping = typingChats[chat] ? typingChats[chat] : []
             
             if (currentTyping.indexOf(username) < 0) {
@@ -102,37 +91,30 @@ export default function Main({chatRoute,otherProfile}) {
                 currentTyping.splice(currentTyping.indexOf(user.username), 1);
             }
             
-            // let obj = {...typingChats,[chat]:currentTyping}
             setTypingChats({...typingChats,[chat]:currentTyping})
-            // console.log(obj)
         })
         socket.on('push_typing_off',({username,chat})=>{
-            // console.log(username,chat,'off typing...')
-
             let currentTyping = typingChats[chat] ? typingChats[chat] : []
             
-            // console.log(currentTyping)
-            
-
             if (currentTyping.indexOf(username) > -1) {
                 currentTyping.splice(currentTyping.indexOf(username), 1);
             }
             
-            // let obj = {...typingChats,[chat]:currentTyping}
             setTypingChats({...typingChats,[chat]:currentTyping})
-            // console.log(obj)
         })
-        socket.on('push_other_user',({exist,userId,username,status,avatar,tag})=>{
-            // console.log(test)
-            // console.log(userId,exist)
-            
+        socket.on('push_other_user',({exist,userId,username,status,avatar,tag,friends})=>{
             if(!exist) {
-                // console.log()
                 return setUsersProfile({...usersProfile,[userId]:{exist:false}})   
             }
-            setUsersProfile({...usersProfile,[userId]:{exist:true,username,status,avatar,tag}})
+            setUsersProfile({...usersProfile,[userId]:{exist:true,username,status,avatar,tag,friends}})
 
-            // console.log(username,status,avatar)
+        })
+        socket.on('push_friend_requests',(friendRequests)=>{
+            setFriendRequests(friendRequests)
+        })
+        socket.on('push_friends',(friends)=>{
+            console.log('push_friends')
+            setFriends(friends)
         })
 
         return(
@@ -140,7 +122,6 @@ export default function Main({chatRoute,otherProfile}) {
                 socket.removeAllListeners();
             }
         )
-        // setSocket(ioSocket)
     },[socket,chats,history,auth,user,typingChats,usersProfile])
 
     useEffect(()=>{
@@ -193,7 +174,7 @@ export default function Main({chatRoute,otherProfile}) {
                         <ChatHeading title={"Профиль"} barSwitch={viewSwitch} />
                         {
                             !otherProfile ?
-                            <Profile setAvatar={setAvatar} setEasterEgg={setEasterEgg} setStatus={setStatus} socket={socket} />
+                            <Profile friends={friends} requests={friendRequests} setAvatar={setAvatar} setEasterEgg={setEasterEgg} setStatus={setStatus} socket={socket} />
                             :
                             <OtherProfile usersProfile={usersProfile} setEasterEgg={setEasterEgg} socket={socket} />
                         }

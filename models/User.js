@@ -1,4 +1,4 @@
-const {Schema,model} = require('mongoose')
+const {Schema,model,Types} = require('mongoose')
 
 const schema = new Schema({
     username:{
@@ -17,6 +17,10 @@ const schema = new Schema({
     status:{
         type:String,
         default:""
+    },
+    friends:{
+        type:[Types.ObjectId],
+        ref: 'User'
     },
     tag:{
         type:String,

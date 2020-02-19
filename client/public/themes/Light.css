@@ -1,3 +1,4 @@
+  /* chat */
   input[type="text"],
   textarea {
     background-color: rgb(188, 188, 231);
@@ -27,7 +28,7 @@
     background: #d0b7e2;
   }
   #side-bar .avatar {
-    border: #bbb2b2 2px solid;
+    border: #151515 2px solid;
   }
   .chat-header {
     background: hsl(278, 24%, 80%);
@@ -95,3 +96,15 @@
   svg{
     fill:black;
   }
+  /* profile */
+.chat-room{
+  background:rgb(111, 144, 180);
+}
+.requests-container .request, .friends-header, .friends-footer{
+  background:#5dc565;
+}
+.friends-container{
+  background:rgb(165, 198, 235);
+  border-left:rgb(165, 198, 235);
+  border-right:rgb(165, 198, 235);
+}
