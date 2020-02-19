@@ -3,7 +3,7 @@ const config = require('config')
 const mongoose = require('mongoose')
 
 const path = require('path')
-const PORT = config.get('port') || 5000
+const PORT = process.env.PORT || config.get('port')
 
 const app = express()
 
@@ -22,7 +22,7 @@ if(process.env.NODE_ENV === 'production'){
 
 async function start(){
     try{
-        await mongoose.connect(config.get('mongoUri'),{
+        await mongoose.connect(process.env.MONGODB_URI || config.get('mongoUri'),{
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
