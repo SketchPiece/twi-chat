@@ -1,12 +1,17 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
+import { getAvatarUrl } from '../scripts/extra'
 
-export default function Friend() {
+export default function Friend({username,userId,avatar}) {
     return (
         <div className="friend-container">
             <div>
-                <img className="avatar" src="https://cdn.discordapp.com/avatars/578197813821833227/ca27c52873bb1c3ee33aca4fbc0a09bf.png?size=256" alt="friend-avatar"/>
+                <Link to={`/profile/${userId}`}>
+                    {/* Пофиксить гифки аватарок!! */}
+                    <img className="avatar" src={getAvatarUrl(avatar,65)} alt="friend-avatar"/>
+                </Link>
             </div>
-            <div className="username">MasterTime</div>
+            <div className="username">{username}</div>
         </div>
     )
 }

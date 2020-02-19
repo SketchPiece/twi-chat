@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import './Profile.css'
 import TextareaAutosize from 'react-textarea-autosize';
-// import Friend from './Friend';
+import Friend from './Friend';
 import { UserContext } from '../context/UserContext';
 import useKonami from 'react-use-konami';
 import { useHttp } from '../hooks/http.hook';
@@ -9,14 +9,11 @@ import { getAvatarUrl } from '../scripts/extra'
 import {getTag} from '../scripts/extra'
 import FriendRequest from './FriendRequest';
 
-// import { useParams } from 'react-router-dom'
-
-
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/sketchcorp/upload'
 const CLOUDINARY_UPLOAD_PRESET = 'da9k11cr'
 
-export default function Profile({socket,setStatus,setAvatar,setEasterEgg}) {
-    const {username,avatar,status,tag} = useContext(UserContext)
+export default function Profile({socket,setStatus,setAvatar,setEasterEgg,friends,requests}) {
+    const {username,avatar,status,tag,userId} = useContext(UserContext)
     const [profStatus, setProfStatus] = useState('')
     const [staticStatus,setStaticStatus] = useState('')
     const [avatarStatic, setAvatarStatic] = useState(getAvatarUrl('v1581959183/levng698wjc23g8d5iua.gif',180))
@@ -36,25 +33,26 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg}) {
         setAvatarStatic(getAvatarUrl(avatar,180))
     }, [status,avatar])
 
+    useEffect(() => {
+        socket.emit('get_friend_requests')
+        socket.emit('get_friends')
+
+    }, [socket,userId])
+
+    const requestHandler = (userId,isAccept)=>{
+        socket.emit('request_handler',{userId,accept:isAccept})
+    }
+
     const pressHandler = (e) =>{
         if(e.key==="Enter") {
-            // console.log(e.target.value)
             setStaticStatus(e.target.value)
             setStatus(e.target.value)
             socket.emit('update_status',{status:e.target.value})
             e.target.blur()
         }
     }
-    // const getAvatar = () =>{
-    //     if(avatar){
-    //         return avatar;
-    //     }else{
-    //         return '/images/load.gif'
-    //     }
-    // }
 
     const imageHandler = async e =>{
-        // console.log(e.target.files[0])
         let file = e.target.files[0]
         let formData = new FormData()
         formData.append('file',file)
@@ -62,17 +60,12 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg}) {
         setAvatarStatic(getAvatarUrl('v1581959183/levng698wjc23g8d5iua.gif',180))
         try{
             const {data} = await requestFormData(CLOUDINARY_URL, 'POST', formData)
-            //console.log(data)
             let imageId = `v${data.version}/${data.public_id}.${data.format}`
-            // console.log(imageId)
             setAvatarStatic(getAvatarUrl(imageId,180))
             socket.emit('update_avatar',{avatar:imageId})
             setAvatar(imageId)
             if(avatar === "v1581973009/w1xcn5v6tl80hw72lpts.png") return
             socket.emit('delete_avatar',{avatar})
-
-            // let data = await cloudinary.uploader.upload(file)
-            // console.log(data)
         } catch(e){
             console.log(e)
             alert("Ойййй... Что-то пошло не так при загрузке аватарки. Пожалуйста, нажмите Ctrl+Shift+I и сделайте скриншот консоли. Спасибо ^^ -Скетч")
@@ -95,7 +88,6 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg}) {
                 </div>
                 <div className="data-wrapper">
                 <div className="username">{username} {getTag(tag)}</div>
-                    {/* <div className="status"></div> */}
                         <TextareaAutosize
                         maxLength="190"
                         
@@ -113,21 +105,21 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg}) {
                 </div>
             </div>
             <div className="requests-container">
-                <FriendRequest />
-                {/* <FriendRequest />
-                <FriendRequest />
-                <FriendRequest />
-                <FriendRequest /> */}
-
+                {
+                    requests.map(({username,userId})=>{
+                        return <FriendRequest username={username} userId={userId} requestHandler={requestHandler} />
+                    })
+                }
             </div>
         </div> 
         <div className="friends-header">Друзья</div>
         <div className="friends-container" id="msgs">
             <div className="friends" id="msgsInner">
-                {/* <Friend/>
-                <Friend/>
-                <Friend/>
-                <Friend/> */}
+                {
+                    friends.map(({username,userId,avatar})=>{
+                        return <Friend username={username} userId={userId} avatar={avatar} />
+                    })
+                }
             </div>
         </div>
         <div className="friends-footer"></div>

@@ -16,7 +16,7 @@ export const ToBottom = () => {
     container.scrollTo(0, container.scrollHeight-container.offsetHeight);
 }
 
-export const getAvatarUrl = (id,scale,notGif) =>{
+export const getAvatarUrl = (id,scale) =>{
     if(scale){
         return `https://res.cloudinary.com/sketchcorp/image/upload/c_scale,h_${scale},w_${scale}/${id}`    
     }

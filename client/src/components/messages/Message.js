@@ -9,7 +9,6 @@ export default function Message({message,me,name,avatarId,userId}) {
 
     useEffect(() => {
         let format = avatarId.split('/')[1].split('.')[1]
-        // console.log(format)
         setIncomeFormat(format)
     }, [avatarId])
     const mouseEnterHandler = () =>{
@@ -29,7 +28,6 @@ export default function Message({message,me,name,avatarId,userId}) {
     }
     return (
         <div onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} className={`message-container` + (me ? ' me':' ')}>
-            {/* <div className="time">20:20</div> */}
             <div className="avatarFront">
                 <Link to={`/profile/${userId}`}>
                     <img src={generateAvatar(avatarId)} alt="avatar"/>

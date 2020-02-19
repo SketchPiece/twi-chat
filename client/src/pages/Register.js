@@ -3,12 +3,9 @@ import { Link } from 'react-router-dom'
 import { Animated } from "react-animated-css";
 import { useHttp } from '../hooks/http.hook';
 import { AuthContext } from '../context/AuthContext';
-// import {useHistory} from 'react-router-dom'
-// import { randomAnimation } from '../scripts/extra'
 
 export default function Register() {
     const auth = useContext(AuthContext);
-    // const history = useHistory()
 
     const [form, setForm] = useState({
         username:"",password:"",repPassword:""
@@ -20,51 +17,31 @@ export default function Register() {
     })
     const {loading,request} = useHttp()
     
-    // useEffect(() => {
-    //     // console.log("Error",error)
-    //     // message(error)
-    //     // console.log(error)
-    //     // if(error){
-
-    //     // }
-    //     // setWarnStatus(1)
-    //     // setWarnText(error)
-    //     // setInputErr({...inputErr,username:1})
-    //     // clearError()
-    // }, [])
-    
     const changeHandler = e =>{
         e.target.classList.remove('input-red');
-        //animated
-        // e.target.classList.remove('animated');
         
         setWarnStatus(0);
         setForm({ ...form,[e.target.name]: e.target.value.trim() })
     }
     const registerHandler = async e =>{
         e.preventDefault()
-        // setWarnStatus('none');
-        // console.log(form.name)
         setInputErr({...inputErr,username:0,password:0,repPassword:0})
         if(!form.username) {
             setWarnStatus(1)
             setWarnText("Логин обязательное поле!")
             setInputErr({...inputErr,username:1})
-            // console.log(inputErr)
             return;
         }
         if(form.username.includes(' ')) {
             setWarnStatus(1)
             setWarnText("Логин не дожен содержать пробелов!")
             setInputErr({...inputErr,username:1})
-            // console.log(inputErr)
             return;
         }
         if(!form.password){
             setWarnStatus(1)
             setWarnText("Пароль обязательное поле!")
             setInputErr({...inputErr,password:1})
-            // console.log(inputErr)
             return;
         }
         if(form.password!==form.repPassword){
@@ -73,16 +50,9 @@ export default function Register() {
             setWarnText("Пароли не совпадают!")
             return;
         }
-        // console.log(form)
-        // alert("register!")
         try{
             const data = await request('/api/auth/register','POST', {...form})
-            // console.log('data',data)
             auth.login(data.token,data.userId,data.username)
-            
-
-            // message(data.message)
-            // console.log()
         }catch(e){
             console.log(e.message)
             setWarnStatus(1)
@@ -104,7 +74,6 @@ export default function Register() {
         }
     }
     const warnInput = (target) => {
-        // console.log(inputErr[target])
         switch(inputErr[target]){
             case 0:
                 return ""

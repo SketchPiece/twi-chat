@@ -11,9 +11,6 @@ export default function EasterEgg() {
 
     useEffect(() => {
         sound.play()
-        // console.log(sound)
-
-    
     }, [sound])
     if(start) return (
         <div className="easter-egg">
