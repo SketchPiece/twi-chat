@@ -62,7 +62,7 @@ const socket = (server) => {
         const user = await User.findOne({_id: new ObjectId(socket.userId)})
         socket.emit("load_user_info",{username:user.username,avatar:user.avatar,userId:socket.userId,status:user.status,tag:user.tag})
         let messages = await Message.find({chat:'community'}).exec();
-        messages = messages.slice(messages.length-250)
+        messages = messages.slice(messages.length-25)
 
         let avatarsСache = {}
         let messagesWithAvatars = []
