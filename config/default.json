@@ -1,5 +1,5 @@
 {
     "port": 5000,
     "jwtSecret":"MasterTime is gay",
-    "mongoUri":"mongodb://localhost:27017/twichat"
+    "mongoUri":"mongodb://heroku_f2mp51hb:gh52vp6c2j0ukl9vfs0nmip398@ds139167.mlab.com:39167/heroku_f2mp51hb"
 }
