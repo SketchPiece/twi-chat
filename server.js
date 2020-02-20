@@ -22,7 +22,7 @@ if(process.env.NODE_ENV === 'production'){
 
 async function start(){
     try{
-        await mongoose.connect(config.get('mongoUri'),{
+        await mongoose.connect(process.env.MONGODB_URI || config.get('mongoUri'),{
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
