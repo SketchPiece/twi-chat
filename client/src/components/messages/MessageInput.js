@@ -116,6 +116,11 @@ export default function MessageInput({visibleButton,socket,chat,typing,load}) {
                             onKeyDown={keyDownHandler}
                             onKeyUp={keyUpHandler}
                             />
+                        {/* <div contentEditable='true'
+                            className = "form-control message-input"
+                        >
+                            Напишите что то интересное
+                        </div> */}
                         <button
                             disabled = {load} 
                             type = "submit"

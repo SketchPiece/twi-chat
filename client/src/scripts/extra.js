@@ -17,8 +17,9 @@ export const ToBottom = () => {
 }
 
 export const getAvatarUrl = (id,scale) =>{
+    if(!id) return '/images/load.gif'
     if(scale){
-        return `https://res.cloudinary.com/sketchcorp/image/upload/c_scale,h_${scale},w_${scale}/${id}`    
+        return `https://res.cloudinary.com/sketchcorp/image/upload/c_fill,h_${scale},w_${scale}/${id}`    
     }
     return `https://res.cloudinary.com/sketchcorp/image/upload/${id}`
 }

@@ -16,7 +16,7 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg,friends
     const {username,avatar,status,tag,userId} = useContext(UserContext)
     const [profStatus, setProfStatus] = useState('')
     const [staticStatus,setStaticStatus] = useState('')
-    const [avatarStatic, setAvatarStatic] = useState(getAvatarUrl('v1581959183/levng698wjc23g8d5iua.gif',180))
+    const [avatarStatic, setAvatarStatic] = useState(getAvatarUrl(null,180))
     const { requestFormData } = useHttp()
     // const paramUserId = useParams().id
     
@@ -30,6 +30,7 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg,friends
     useEffect(() => {
         setProfStatus(status)
         setStaticStatus(status)
+        if(!avatar) return
         setAvatarStatic(getAvatarUrl(avatar,180))
     }, [status,avatar])
 
@@ -81,7 +82,7 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg,friends
                     <div className="image-upload">
                         <label htmlFor="avatar-input">
                             <div className="cover">Загрузить</div>
-                            <img src={avatarStatic} alt="avatar"/>
+                            <img src={avatarStatic} alt="avatar" />
                         </label>
                         <input onChange={imageHandler} id="avatar-input" type="file" accept="image/*" />
                     </div>
@@ -106,8 +107,8 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg,friends
             </div>
             <div className="requests-container">
                 {
-                    requests.map(({username,userId})=>{
-                        return <FriendRequest username={username} userId={userId} requestHandler={requestHandler} />
+                    requests.map(({username,userId},index)=>{
+                        return <FriendRequest key={index} username={username} userId={userId} requestHandler={requestHandler} />
                     })
                 }
             </div>
@@ -116,8 +117,8 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg,friends
         <div className="friends-container" id="msgs">
             <div className="friends" id="msgsInner">
                 {
-                    friends.map(({username,userId,avatar})=>{
-                        return <Friend username={username} userId={userId} avatar={avatar} />
+                    friends.map(({username,userId,avatar},index)=>{
+                        return <Friend key={index} username={username} userId={userId} avatar={avatar} />
                     })
                 }
             </div>
