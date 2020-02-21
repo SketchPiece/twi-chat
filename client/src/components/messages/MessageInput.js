@@ -60,6 +60,7 @@ export default function MessageInput({visibleButton,socket,chat,typing,load}) {
 
     const sendButtonHandler = (e)=>{
         e.preventDefault()
+        document.getElementById("message").focus();
         sendMessage(inputText)
     }
 
