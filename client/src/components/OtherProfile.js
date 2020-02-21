@@ -13,7 +13,7 @@ export default function OtherProfile({socket,setEasterEgg,usersProfile}) {
     const {userId} = useContext(UserContext)
     const [load, setLoad] = useState(true)
     const [profStatus, setProfStatus] = useState('')
-    const [avatarStatic, setAvatarStatic] = useState(getAvatarUrl('v1581959183/levng698wjc23g8d5iua.gif',180))
+    const [avatarStatic, setAvatarStatic] = useState(getAvatarUrl(null,180))
     const [usernameProfile, setUsernameProfile] = useState('')
     const [tag, setTag] = useState('')
     const [friends, setFriends] = useState([])
@@ -95,8 +95,8 @@ export default function OtherProfile({socket,setEasterEgg,usersProfile}) {
         <div className="friends-container" id="msgs">
             <div className="friends" id="msgsInner">
                 {
-                    friends.map(({username,userId,avatar})=>{
-                        return <Friend username={username} userId={userId} avatar={avatar} />
+                    friends.map(({username,userId,avatar},index)=>{
+                        return <Friend key={index} username={username} userId={userId} avatar={avatar} />
                     })
                 }
             </div>

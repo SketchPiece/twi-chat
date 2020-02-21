@@ -382,7 +382,7 @@ textarea {
 }
 .message-input .message-form .form-control {
   padding-top: 22px;
-  padding-bottom: 22px;
+  /* padding-bottom: 22px; */
   resize: none;
   padding-left: 15px;
   padding-right: 15px;
@@ -431,3 +431,7 @@ textarea {
 .react-button:hover{
   cursor: pointer;
 }
+
+/* .message-input{
+
+} */
