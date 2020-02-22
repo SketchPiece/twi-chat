@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import {Animated} from "react-animated-css";
 import { randomAnimation } from '../scripts/extra'
 import { Link } from 'react-router-dom'
-import '../styles/Login.css'
+import './Login.css'
 import { useHttp } from '../hooks/http.hook';
 import { AuthContext } from '../context/AuthContext';
 

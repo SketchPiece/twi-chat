@@ -36,17 +36,17 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
                         onClick={()=>{chatSwitch()}}
                         > <IoIosArrowBack/> </div>
 						<div className="app-name">TwiChat v0.8 Beta</div>
-                        <div className="menu">
+                        <div onClick={()=>{chatSwitch()}} className="menu">
                         {
                             chatRoute ? 
                             <IconContext.Provider value={{ color: "white", size:"20px" }}>
-                            <Link onClick={()=>{chatSwitch()}} to="/profile">
+                            <Link to="/profile">
                                 <IoIosPerson className="react-button"/>
                             </Link>
                             </IconContext.Provider>
                             :
                             <IconContext.Provider value={{ color: "white", size:"20px" }}>
-                            <Link onClick={()=>{chatSwitch()}} to="/chat">
+                            <Link to="/chat">
                                 <FaComments className="react-button"/>
                             </Link>
                             </IconContext.Provider>
@@ -73,7 +73,7 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
 					<div className="current-user">
                         <div className="user-container">
                             <Link to='/profile'>
-                            <img className={ "avatar"+(!load ? " animated slideInRight" : ' none')} src={getAvatarUrl(avatar,54)} alt="avatar"/>
+                            <img className={ "avatar"+(!load ? " animated slideInRight" : ' none')} onClick={()=>{chatSwitch()}} src={getAvatarUrl(avatar,54)} alt="avatar"/>
                             </Link>
 						<span className={ "username"+(!load ? " animated slideInRight" : ' none')}>{username}</span> 
                         </div>

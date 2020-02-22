@@ -12,8 +12,15 @@ export const randomAnimation = () => {
 }
 
 export const ToBottom = () => {
-    let container = document.getElementById('msgs');
-    container.scrollTo(0, container.scrollHeight-container.offsetHeight);
+    let container = document.getElementById('msgs')
+    // if(!container) return
+    container.scrollTo(0, container.scrollHeight-container.offsetHeight)
+}
+
+export const ScrollTo = (to) => {
+    let container = document.getElementById('msgs')
+    // if(!container) return
+    container.scrollTo(0, to)
 }
 
 export const getAvatarUrl = (id,scale) =>{
