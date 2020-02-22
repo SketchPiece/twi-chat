@@ -58,11 +58,14 @@ const socket = (server) => {
 
             io.in(userId).emit('push_friends',pushFriends)
         }
+
+
         if(socket.authError) return socket.emit('logout')
         const user = await User.findOne({_id: new ObjectId(socket.userId)})
         socket.emit("load_user_info",{username:user.username,avatar:user.avatar,userId:socket.userId,status:user.status,tag:user.tag})
-        let messages = await Message.find({chat:'community'}).exec();
-        messages = messages.slice(messages.length-25)
+        let messages = await (await Message.find({chat:'community'}).sort('-created').limit(30).exec()).reverse();
+        // messages = messages.slice(messages.length-7)
+        // messages.length = Math.min(messages.length, 7);
 
         let avatarsСache = {}
         let messagesWithAvatars = []
@@ -72,8 +75,9 @@ const socket = (server) => {
                 avatarsСache[messages[i].userId] = user.avatar
             }
             
-            messagesWithAvatars.push({username: messages[i].username,userId:messages[i].userId,text:messages[i].text,avatar:avatarsСache[messages[i].userId]})
+            messagesWithAvatars.push({id:messages[i]._id,username: messages[i].username,userId:messages[i].userId,text:messages[i].text,avatar:avatarsСache[messages[i].userId]})
         }
+        // console.log()
 
         socket.emit('load_messages', messagesWithAvatars);
 
@@ -82,9 +86,28 @@ const socket = (server) => {
         socket.on('logout',() => {
             socket.in(socket.userId).emit("reload")
         })
-        socket.on('send_message',({text,username,userId,avatar,chat})=>{
-            io.in(chat).emit('push_message',{text,username,userId,avatar,chat})
+        socket.on('refresh_messages',async ()=>{
+            let messages = await (await Message.find({chat:'community'}).sort('-created').limit(30).exec()).reverse();
+
+            let avatarsСache = {}
+            let messagesWithAvatars = []
+            for(let i = 0;i<messages.length;i++){
+                if(!avatarsСache[messages[i].userId]){
+                    let user = await User.findOne({_id: new ObjectId(messages[i].userId)})
+                    avatarsСache[messages[i].userId] = user.avatar
+                }
+                
+                messagesWithAvatars.push({id:messages[i]._id,username: messages[i].username,userId:messages[i].userId,text:messages[i].text,avatar:avatarsСache[messages[i].userId]})
+            }
+            // console.log(messages)
+
+            socket.emit('push_refresh_messages', messagesWithAvatars);
+        })
+        socket.on('send_message',async ({text,username,userId,avatar,chat})=>{
             let message = new Message({username,userId,text,chat})
+            // console.log(message._id)
+            io.in(chat).emit('push_message',{id:message._id,text,username,userId,avatar,chat})
+            
             message.save()
         })
         socket.on('send_typing_on',({username,chat})=>{
@@ -174,8 +197,23 @@ const socket = (server) => {
             updateFriends(userId)
 
             updateFriendRequests(socket.userId)
+        })
+        socket.on('load_more_messages',async ({next})=>{
+            // console.log(next)
+            let messages = await (await Message.find({chat:'community'}).sort('-created').skip(30*next).limit(30).exec()).reverse();
 
-            
+            let avatarsСache = {}
+            let messagesWithAvatars = []
+            for(let i = 0;i<messages.length;i++){
+                if(!avatarsСache[messages[i].userId]){
+                    let user = await User.findOne({_id: new ObjectId(messages[i].userId)})
+                    avatarsСache[messages[i].userId] = user.avatar
+                }
+                
+                messagesWithAvatars.push({id:messages[i]._id,username: messages[i].username,userId:messages[i].userId,text:messages[i].text,avatar:avatarsСache[messages[i].userId]})
+            }
+            console.log(messagesWithAvatars)
+            socket.emit('push_more_messages', {messages:messagesWithAvatars,isFinish:messagesWithAvatars.length<=0});
         })
 
 

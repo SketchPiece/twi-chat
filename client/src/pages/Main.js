@@ -3,7 +3,7 @@ import SideBar from '../components/chats/SideBar'
 import ChatHeading from '../components/chats/ChatHeading'
 import Messages from '../components/messages/Messages'
 import MessageInput from '../components/messages/MessageInput'
-import '../styles/Main.css'
+import './Main.css'
 import { Animated } from 'react-animated-css'
 import { useWindowSize } from '../hooks/winsize.hook'
 import { AuthContext } from '../context/AuthContext'
@@ -32,6 +32,7 @@ export default function Main({chatRoute,otherProfile}) {
     const [usersProfile, setUsersProfile] = useState({})
     const [friendRequests, setFriendRequests] = useState([])
     const [friends, setFriends] = useState([])
+    const [finishMessages, setFinishMessages] = useState(false)
 
     
     const [socket] = useSocket({
@@ -55,7 +56,8 @@ export default function Main({chatRoute,otherProfile}) {
         socket.on('load_user_info',(user)=>{
             setUser({...user,load:false})
         })
-        socket.on('load_messages',(messages) =>{            
+        socket.on('load_messages',(messages) =>{ 
+            // console.log('load_messages')           
             setLoadMessages(false)
             let last = null
             if(messages.length > 0){
@@ -67,11 +69,34 @@ export default function Main({chatRoute,otherProfile}) {
                 last = {...messages[messages.length-1],text:textLast}
             }
             let chat = 'community'
-            setChats({[chat]:{messages:[...messages],last,typing:[]}})
+            setChats({[chat]:{messages:[...messages],last,typing:[],next:1}})
+            // console.log(messages.length)
             
         })
-        socket.on('push_message',({chat,username,userId,text,avatar})=>{
-            let message = {username,userId,text,avatar}
+        socket.on('push_refresh_messages',(messages)=>{
+            setFinishMessages(false)
+            let last = null
+            if(messages.length > 0){
+                let text = messages[messages.length-1].text
+                let textLast = text.slice(0,15);
+                if (textLast.length < text.length) {
+                    textLast += '...';
+                }
+                last = {...messages[messages.length-1],text:textLast}
+            }
+            let chat = 'community'
+            setChats({[chat]:{messages:[...messages],last,typing:[],next:1}})
+        })
+        socket.on('push_more_messages',({messages,isFinish})=>{
+            setFinishMessages(isFinish)
+            console.log(isFinish)
+            // console.log('load')
+            // console.log(messages)
+            let chat = 'community'
+            setChats({[chat]:{messages:[...messages,...chats[chat].messages],last:chats[chat].last,typing:chats[chat].typing,next:chats[chat].next+1}})
+        })
+        socket.on('push_message',({id,chat,username,userId,text,avatar})=>{
+            let message = {id,username,userId,text,avatar}
             let currentMessages = chats[chat] ? chats[chat].messages : []
             let currentTyping = chats[chat] ? chats[chat].typing : []
 
@@ -128,6 +153,19 @@ export default function Main({chatRoute,otherProfile}) {
         socket.connect();
         // console.log('connect')
     },[socket])
+
+    function handleScroll() {
+        let container = document.getElementById('msgs');
+
+        if (container.innerHeight + container.scrollTop !== container.offsetHeight) return;
+        console.log('Fetch more list items!');
+      }
+
+    useEffect(() => {
+        let container = document.getElementById('msgs');
+        container.addEventListener('scroll', handleScroll);
+        return () => container.removeEventListener('scroll', handleScroll);
+      }, []);
     
     function viewSwitch(){
         if(width>510) return
@@ -149,6 +187,7 @@ export default function Main({chatRoute,otherProfile}) {
         setUser({...user, avatar})
     }
 
+
     if(easterEgg){
         return <EasterEgg />
     }
@@ -162,8 +201,8 @@ export default function Main({chatRoute,otherProfile}) {
                 <div style={{width:"100%"}} className={"chat-room-container" + (!hide ? " chat-active": " chat-hide")}>
                     <div className="chat-room">
                         <ChatHeading title={"Community"} barSwitch={viewSwitch} />
-                        <Messages messages={chats[chat] ? chats[chat].messages : []} setVisibleButton={setVisibleButton} visibleButton={visibleButton} loading={loadMessages} />
-                        <MessageInput load={loadMessages} typing={typingChats} chat={chat} socket={socket} visibleButton={visibleButton} />
+                        <Messages finishMessages={finishMessages} next={chats[chat] ? chats[chat].next : 0} messages={chats[chat] ? chats[chat].messages : []} setVisibleButton={setVisibleButton} visibleButton={visibleButton} loading={loadMessages} socket={socket} />
+                        <MessageInput setChats={setChats} load={loadMessages} typing={typingChats} chat={chat} socket={socket} visibleButton={visibleButton} />
                     </div>
                 </div>
                 </Animated>

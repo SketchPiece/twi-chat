@@ -194,7 +194,7 @@ textarea {
 
 #back{
   display: none;
-  height: 100%;
+  /* height: 100%; */
   
 }
 #chats-back{
@@ -261,15 +261,27 @@ textarea {
 
   #back{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    width: 2vh;
+    width: 50px;
+    height: 50px;
   }
+
+  .menu{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+  }
+
   #chats-back{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    width: 2vh;
+    /* width: 2vh; */
+    height: 50px;
+    width: 50px;
   }
 }
 .chat-room {
@@ -430,6 +442,11 @@ textarea {
 
 .react-button:hover{
   cursor: pointer;
+}
+
+.msgload{
+  display: flex; 
+  justify-content: center;
 }
 
 /* .message-input{
