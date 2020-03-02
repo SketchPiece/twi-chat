@@ -65,6 +65,7 @@ const socket = (server) => {
         if(socket.authError) return socket.emit('logout')
         // console.log(socket.userId,socket.id)
         const user = await User.findOne({_id: new ObjectId(socket.userId)})
+        if(!user) return socket.emit('logout')
         socket.emit("load_user_info",{username:user.username,avatar:user.avatar,userId:socket.userId,status:user.status,tag:user.tag})
         let messages = await (await Message.find({chat:'community'}).sort('-created').limit(25).exec()).reverse();
         // messages = messages.slice(messages.length-7)
