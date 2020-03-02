@@ -350,6 +350,7 @@ textarea {
 
 .message-container .message{
   overflow: hidden;
+  word-break: break-word;
 
   display: inline-block;
   min-width: 160px;
