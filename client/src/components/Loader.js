@@ -14,7 +14,7 @@ export default function Loader({loader}) {
         </div>
     )
     if(loader === 'msgload') return(
-        <div class="loadingio-spinner-ellipsis-ls8rjpa7b19"><div class="ldio-xetx4216ci"><div></div><div></div><div></div><div></div><div></div></div></div>
+        <div className="loadingio-spinner-ellipsis-ls8rjpa7b19"><div className="ldio-xetx4216ci"><div></div><div></div><div></div><div></div><div></div></div></div>
     )
     return(
         <div></div>

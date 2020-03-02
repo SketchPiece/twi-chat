@@ -4,16 +4,18 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IconContext } from "react-icons";
 import { UserContext } from '../../context/UserContext';
 import { useTimer } from 'react-timer-hook';
+import {useParams} from 'react-router-dom'
 
 export default function MessageInput({visibleButton,socket,chat,typing,load}) {
     const [inputText,setInputText] = useState("");
     const [type, setType] = useState('')
     const {username,userId,avatar} = useContext(UserContext)
+    const paramsChatId = useParams().id
 
 
     const time = new Date()
     const timer = time.setSeconds(time.getSeconds() + 3);
-    const {restart,pause} = useTimer({ timer, onExpire: () => {
+    const {restart,pause} = useTimer({ expiryTimestamp:timer, onExpire: () => {
         socket.emit('send_typing_off',{username,chat})
     } })
 
@@ -69,14 +71,15 @@ export default function MessageInput({visibleButton,socket,chat,typing,load}) {
         socket.emit('send_typing_off',{username,chat})
         if(!text) return 
         setInputText('')
-        socket.emit('send_message',{text,username,userId,avatar,chat})
+        let sendTo = 'community'
+        if(paramsChatId) sendTo = paramsChatId
+        socket.emit('send_message',{text,username,userId,avatar,chat,sendTo})
     }
 
     const scrollDownHandler = () =>{
         const thread = document.getElementById("msgs")
         thread.scrollTo({
-            top:thread.scrollHeight,
-            behavior: "smooth"
+            top:thread.scrollHeight
         })
     }
 

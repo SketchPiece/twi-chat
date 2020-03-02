@@ -11,9 +11,12 @@ export const randomAnimation = () => {
     return animations[getRandom(0,animations.length-1)]
 }
 
-export const ToBottom = () => {
+export const ToBottom = (delay) => {
     let container = document.getElementById('msgs')
     // if(!container) return
+    if(delay) return setTimeout((container)=>{
+        container.scrollTo(0, container.scrollHeight-container.offsetHeight)
+    },delay,container)
     container.scrollTo(0, container.scrollHeight-container.offsetHeight)
 }
 

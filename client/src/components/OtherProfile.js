@@ -6,7 +6,7 @@ import { UserContext } from '../context/UserContext';
 import useKonami from 'react-use-konami';
 import { getAvatarUrl } from '../scripts/extra'
 import { useParams } from 'react-router-dom'
-import { useHistory } from 'react-router-dom';
+import { useHistory,Link } from 'react-router-dom';
 import {getTag} from '../scripts/extra'
 
 export default function OtherProfile({socket,setEasterEgg,usersProfile}) {
@@ -80,7 +80,9 @@ export default function OtherProfile({socket,setEasterEgg,usersProfile}) {
                     readOnly={true}
                     />
                     <div className="buttons">
-                        <button disabled={true}>Написать</button>
+                        <Link to={`/direct/${paramUserId}`}>
+                        <button disabled={load}>Написать</button>                        
+                        </Link>
                         {
                             !isFriend ?
                             <button disabled={load} onClick={addFriendHandler}>Добавить в друзья</button>

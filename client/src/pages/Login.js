@@ -85,7 +85,7 @@ export default function Login() {
             <Animated style={{height:"100%"}} animationIn={randomAnimation()} isVisible={true}> 
                 <div className="auth-container">
                     <div className="wrapper">
-                    <h2>TwiChat v0.8</h2>
+                    <h2>TwiChat v0.8.1</h2>
                     {/* <img width="200px" src="http://pngimg.com/uploads/hedgehog/hedgehog_PNG11.png" alt="ежиг"/> */}
                     <span className={warnClass()} onAnimationEnd={()=>{setWarnStatus(2)}}>{warnText}</span>
                     <div className="left">

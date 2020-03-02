@@ -29,7 +29,7 @@ export default function Message({message,me,name,avatarId,userId}) {
     return (
         <div onMouseEnter={mouseEnterHandler} onMouseLeave={mouseLeaveHandler} className={`message-container` + (me ? ' me':' ')}>
             <div className="avatarFront">
-                <Link to={`/profile/${userId}`}>
+                <Link to={(me ? `/profile`:`/profile/${userId}`)}>
                     <img src={generateAvatar(avatarId)} alt="avatar"/>
                 </Link>
             </div>
