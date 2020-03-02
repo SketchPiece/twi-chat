@@ -40,6 +40,10 @@ textarea {
 #side-bar .users::-webkit-scrollbar-thumb {
   background-color: #777;
 }
+#side-bar .users .user{
+  color:white;
+}
+
 #side-bar .users .user.active,
 #side-bar .users .user:hover {
   background: #202020;
@@ -77,7 +81,7 @@ textarea {
 }
 .thread-container .thread {
   color: white;
-  background: #151515;
+  /* background: #151515; */
 }
 .message-container img {
   border: 2px solid #252525;
