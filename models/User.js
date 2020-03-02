@@ -25,6 +25,12 @@ const schema = new Schema({
     tag:{
         type:String,
         default:""
+    },
+    chats:{
+        type:Object,
+        default:{}
+        // of:String,
+        // ref: 'Chat'
     }
 })
 

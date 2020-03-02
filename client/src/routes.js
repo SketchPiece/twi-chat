@@ -20,6 +20,9 @@ export const useRoutes = isAuthenticated =>{
                 <Route path='/profile/:id' exact>
                     <Main otherProfile={true} />
                 </Route>
+                <Route path='/direct/:id' exact>
+                    <Main chatRoute={true} direct={true} />
+                </Route>
                 <Redirect to="/chat" />
             </Switch>
         )

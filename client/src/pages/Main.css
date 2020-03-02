@@ -102,6 +102,11 @@ textarea {
   justify-content: flex-start;
   padding: 18px 16px;
 }
+
+#side-bar .users a{
+  text-decoration: none;
+}
+
 #side-bar .users .user:hover:not(.active) {
   cursor: pointer;
 }
@@ -344,6 +349,8 @@ textarea {
 }
 
 .message-container .message{
+  overflow: hidden;
+
   display: inline-block;
   min-width: 160px;
   margin-top: 15px;
@@ -405,7 +412,7 @@ textarea {
 }
 
 .message-input .message-form .form-control::-webkit-scrollbar {
-  width: 5px;
+  width: 0px;
 }
 .message-input .message-form .form-control:focus {
   outline: none;
@@ -449,6 +456,9 @@ textarea {
   justify-content: center;
 }
 
+.user .chat-avatar{
+  border-radius: 50%;
+}
 /* .message-input{
 
 } */

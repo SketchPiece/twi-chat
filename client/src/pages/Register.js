@@ -91,7 +91,7 @@ export default function Register() {
             <Animated style={{height:"100%"}} animationIn="fadeIn" isVisible={true}> 
                 <div className="auth-container">
                     <div className="wrapper">
-                    <h2>TwiChat v0.8</h2>
+                    <h2>TwiChat v0.8.1</h2>
                     <span className={warnClass()} onAnimationEnd={()=>{setWarnStatus(2)}}>{warnText}</span>
                     <div className="left">
                     <label htmlFor="username">Логин</label>

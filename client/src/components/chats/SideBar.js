@@ -1,15 +1,15 @@
 import React, { useContext} from 'react'
 import { IoIosArrowBack,IoIosLogOut,IoIosPerson } from "react-icons/io";
 import { FaComments } from 'react-icons/fa'
-import {getAvatarUrl} from '../../scripts/extra'
-
+import {getAvatarUrl, ToBottom} from '../../scripts/extra'
+// import {} from 'react-router-dom'
 import { IconContext } from "react-icons";
 import { AuthContext } from '../../context/AuthContext';
 import { useHistory,Link } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 
 
-export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRoute}) {
+export default function SideBar({viewState,chatSwitch,hide,socket,chats,chat,chatRoute,chatButtons}) {
     const {username,avatar,load} = useContext(UserContext);
     const auth = useContext(AuthContext)
     const history = useHistory()
@@ -35,7 +35,7 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
                         id="back"
                         onClick={()=>{chatSwitch()}}
                         > <IoIosArrowBack/> </div>
-						<div className="app-name">TwiChat v0.8 Beta</div>
+						<div className="app-name">TwiChat v0.8.1 Beta</div>
                         <div onClick={()=>{chatSwitch()}} className="menu">
                         {
                             chatRoute ? 
@@ -54,12 +54,11 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
                         
                         </div>
 					</div>
-					<div 
-						className="users" 
-                        >
+					<div className="users" >
                         
+                        <Link onClick={()=>{chatSwitch();ToBottom();}} to='/chat'>                        
                         <div 
-                            className={`user active`}
+                            className={`user `+ (chat === 'community' ? 'active' : '') }
                             >
                             <div className="user-photo">{"C"}</div>
                             <div className="user-info">
@@ -68,6 +67,44 @@ export default function SideBar({viewState,chatSwitch,hide,socket,chats,chatRout
                             </div>
                             
                         </div>
+                        </Link>
+
+                        {
+                            chatButtons.map(({chatId,userId,username,avatar},index)=>{
+                                // console.log()
+                                if(!getLastMessage(chatId)) return <></>
+                                return (
+                                <Link key={index} onClick={()=>{chatSwitch();ToBottom();}} to={`/direct/${userId}`}>                        
+                                <div 
+                                    className={`user `+ (chat === chatId ? 'active' : '') }
+                                    >
+                                    <div className="user-photo">
+                                        <img className="chat-avatar" src={getAvatarUrl(avatar,65)} alt="chatAvatar" width="65"/>
+                                    </div>
+                                    <div className="user-info">
+                                        <div className="name">{username}</div>
+                                        <div className="last-message">{getLastMessage(chatId)}</div>
+                                    </div>
+                                    
+                                </div>
+                                </Link>
+                                )
+                            })
+                        }
+
+                        {/* <Link onClick={()=>{chatSwitch();ToBottom();}}  to='/direct/5e4fd4eeff2bff4adca003a7'>                        
+                        <div 
+                            className={`user`}
+                            >
+                            <div className="user-photo">{"A"}</div>
+                            <div className="user-info">
+                                <div className="name">{"Admin"}</div>
+                                <div className="last-message">{getLastMessage('community')}</div>
+                            </div>
+                            
+                        </div>
+                        </Link> */}
+
 						
 					</div>
 					<div className="current-user">
