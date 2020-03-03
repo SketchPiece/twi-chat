@@ -90,7 +90,7 @@ const socket = (server) => {
             let userChatLast = await Message.find({chat:user.chats[chat]}).sort('-created').exec()
             // console.log()
 
-            if(userChatLast||userChatLast.length>0) chatLasts.push({id:userChatLast[0]._id,username: userChatLast[0].username,userId:userChatLast[0].userId,text:userChatLast[0].text,avatar:userChat.avatar,chatId:user.chats[chat]})
+            if(userChatLast&&userChatLast.length>0) chatLasts.push({id:userChatLast[0]._id,username: userChatLast[0].username,userId:userChatLast[0].userId,text:userChatLast[0].text,avatar:userChat.avatar,chatId:user.chats[chat]})
             chats.push({userId:chat,chatId:user.chats[chat], username:userChat.username,avatar:userChat.avatar})
         }
         
