@@ -293,35 +293,20 @@ const socket = (server) => {
 
                     // console.log('id',socket.id)
                     // console.log('CHAT_ID',chatId)
-
-                    let userSockets = io.adapter.rooms[socket.userId].sockets
-                    // console.log('userS/ockets',userSockets)
-                    for(let user in userSockets){
-                        io.connected[user].join(chatId)
-                        // console.log(user)
+                    if(io.adapter.rooms[socket.userId]){
+                        let userSockets = io.adapter.rooms[socket.userId].sockets
+                        for(let user in userSockets){
+                            io.connected[user].join(chatId)
+                        }
                     }
-                    let talkerSockets = io.adapter.rooms[userId].sockets
-                    // console.log('talkerSockets',talkerSockets)
-                    for(let talker in talkerSockets){
-                        io.connected[talker].join(chatId)
-                        // console.log(talker)
+                    if(io.adapter.rooms[userId]){
+                        let talkerSockets = io.adapter.rooms[userId].sockets
+                        for(let talker in talkerSockets){
+                            io.connected[talker].join(chatId)
+                        }
                     }
-                    // console.log(io.adapter.rooms[chatId])
-
-                    io.in(chatId).emit('update_chat_buttons',{userIds:[socket.userId,userId],chatId, usernameIds:[user.username,talker.username],avatars:[user.avatar,talker.avatar]})
-                    // io.in(socket.userId).emit('update_chat_buttons',{userIds:[socket.userId,userId],chatId, usernameIds:[user.username,talker.username]})
-
-
-                    // console.log('rooms',io.adapter.rooms)
-                    // io.adapter.rooms[socket.userId].sockets.join(chatId)
-                    // console.log(socket)
-                    // let clients = io.rooms[socket.userId].sockets
-                    // for(let clientId in clients){
-                    //     console.log(clientId)
-                    // }
-                    // console.log(   )
-                    // console.log()
                     
+                    io.in(chatId).emit('update_chat_buttons',{userIds:[socket.userId,userId],chatId, usernameIds:[user.username,talker.username],avatars:[user.avatar,talker.avatar]})
                 }
                 // console.log(createdChat)
                 // let messages = await (await Message.find({chat:chatId}).sort('-created').skip(25*next).limit(25).exec()).reverse();
