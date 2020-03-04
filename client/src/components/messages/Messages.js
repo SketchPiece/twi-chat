@@ -2,6 +2,7 @@ import React,{useState,useEffect, useContext} from 'react'
 import Message from './Message'
 import { UserContext } from '../../context/UserContext';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { CSSTransitionGroup } from 'react-transition-group'
 import {ToBottom,ScrollTo} from '../../scripts/extra'
 import Loader from '../Loader';
 
@@ -122,7 +123,23 @@ export default function Messages({setVisibleButton,messages,loading,socket,next,
                     {
                         !finishMessages && isScroll ? <div className='msgload'><Loader loader='msgload' /></div> : ''
                     }
-                    <ReactCSSTransitionGroup
+                    <CSSTransitionGroup
+                        transitionName={{
+                            enter: "animated",
+                            enterActive: "zoomIn",
+                            leave: "animated",
+                            leaveActive:"fadeOut",
+                        }}
+                        transitionEnterTimeout={400}
+                        transitionLeaveTimeout={400}
+                    >
+                    {
+                        messages.map((msg,i)=>{               
+                            return <Message key={msg.id} message={msg.text} me={user.userId === msg.userId ? true : false} name={msg.username} avatarId={msg.avatar} userId={msg.userId} />
+                        })
+                    }
+                    </CSSTransitionGroup>
+                    {/* <ReactCSSTransitionGroup
                         transitionName={{
                             enter: "animated",
                             enterActive: "zoomIn",
@@ -131,13 +148,9 @@ export default function Messages({setVisibleButton,messages,loading,socket,next,
                         }}
                         transitionEnterTimeout={400}
                         transitionLeaveTimeout={400}
-                        >
-                    {
-                        messages.map((msg,i)=>{               
-                            return <Message key={msg.id} message={msg.text} me={user.userId === msg.userId ? true : false} name={msg.username} avatarId={msg.avatar} userId={msg.userId} />
-                        })
-                    }
-                    </ReactCSSTransitionGroup>
+                        > */}
+                    
+                    {/* </ReactCSSTransitionGroup> */}
 				</div>
                 )
             }
