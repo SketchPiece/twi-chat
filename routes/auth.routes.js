@@ -9,7 +9,7 @@ const User = require('../models/User')
 router.post(
     '/register',[
         check('username','Логин должен содержать только английские символы!').isAscii(),
-        check('password','Минимальная длина пароля 6 символов').isLength({min:6})
+        check('password','Минимальная длина пароля 6 символов. Максимальная 20 символов.').isLength({min:6,max:20})
     ],
     async(req,res)=>{
     try{
