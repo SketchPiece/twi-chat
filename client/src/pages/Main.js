@@ -98,12 +98,6 @@ export default function Main({chatRoute,otherProfile,direct}) {
                 textLast += '...';
             }
             setChats({...chats,[chat]:{messages:[...currentMessages,message],last:{...message,text:textLast},typing:[...currentTyping]}})
-            // if(chatButtons)
-            // if(sendTo==='community') return
-            // if(chatExist(chat)) return
-            // setChatButtons([...chatsRefresh])
-            // setChatButtons([...chatButtons,{chatId:chat,username}])
-            // let u  = {userId,chatId:chat,username}
         })
         socket.on('push_typing_on',({username,chat})=>{
             let currentTyping = typingChats[chat] ? typingChats[chat] : []
@@ -147,15 +141,10 @@ export default function Main({chatRoute,otherProfile,direct}) {
             setChatButtons([...chatButtons,{userId:userIds[notMe],username:usernameIds[notMe],avatar:avatars[notMe],chatId}])
         })
         socket.on('push_chat_messages',({chatId,status,messages,userId})=>{
-            // console.log(status)
-            
             if(!status) return history.push('/chat')
             setLoadMessages(false)
             setChat(chatId)
-            // setLoadChats()
             if(!loadChats[userId]) setLoadChats({...loadChats,[userId]:chatId}) 
-            // console.log(messages)
-            // setChat(null)
             let last = null
             if(messages.length > 0){
                 let text = messages[messages.length-1].text
@@ -177,14 +166,11 @@ export default function Main({chatRoute,otherProfile,direct}) {
     },[socket,chats,history,auth,user,typingChats,usersProfile,chat,direct,community,chatButtons,loadChats,setLoadChats])
 
     useEffect(() => {
-        // console.log(direct)
         if(!direct) setChat('community')
-
 
         if(otherProfile) return
         if(!paramsChatId) return
 
-        // console.log('loadChats',loadChats)
         if(loadChats[paramsChatId]) return setChat(loadChats[paramsChatId])
     
         setLoadMessages(true)
@@ -216,24 +202,10 @@ export default function Main({chatRoute,otherProfile,direct}) {
         setUser({...user, avatar})
     }
 
-    // const chatExist = (chatId) => {
-    //     let isExist = false
-    //     console.log(chatId)
-    //     console.log(chatButtons)
-    //     for(let i = 0;i<chatButtons.length;i++){
-    //         console.log(chatButtons[i])
-    //         if(chatButtons[i].chatId === chatId) isExist = true
-    //     }
-
-    //     return isExist
-    // }
-
     const RefreshChat = (chat) =>{
         let messages = chats[chat] ? chats[chat].messages || [] : []
         
         if(messages.length<=25) return
-        // console.log(messages)        
-        // console.log(messages.slice(messages.length-25))
 
         messages = messages.slice(messages.length-25)
 
@@ -248,7 +220,7 @@ export default function Main({chatRoute,otherProfile,direct}) {
             }
             last = {...messages[messages.length-1],text:textLast}
         }
-        // let chat = 'community'
+
         setChats({...chats,[chat]:{messages:[...messages],last,typing:[],next:1}})
         ToBottom()
     }
@@ -258,7 +230,7 @@ export default function Main({chatRoute,otherProfile,direct}) {
         for(let i=0; i < chatButtons.length; i++){
             if(chatButtons[i].chatId === chat) return chatButtons[i].username
         }
-        return 'Ты шо там, дрочиш?'
+        return 'noname'
     }
 
 
