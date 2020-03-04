@@ -1,7 +1,7 @@
 import React,{useState,useEffect, useContext} from 'react'
 import Message from './Message'
 import { UserContext } from '../../context/UserContext';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { CSSTransitionGroup } from 'react-transition-group'
 import {ToBottom,ScrollTo} from '../../scripts/extra'
 import Loader from '../Loader';
@@ -127,11 +127,11 @@ export default function Messages({setVisibleButton,messages,loading,socket,next,
                         transitionName={{
                             enter: "animated",
                             enterActive: "zoomIn",
-                            leave: "animated",
-                            leaveActive:"fadeOut",
+                            // leave: "animated",
+                            // leaveActive:"fadeOut",
                         }}
                         transitionEnterTimeout={400}
-                        transitionLeaveTimeout={400}
+                        transitionLeave={false}
                     >
                     {
                         messages.map((msg,i)=>{               
