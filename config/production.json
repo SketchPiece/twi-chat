@@ -1,5 +1,5 @@
 {
-    "port": 3000,
-    "jwtSecret":"MasterTime is gay",
-    "mongoUri":"mongodb+srv://twi:twi@tramhack.ia0ba.mongodb.net/twichat?retryWrites=true&w=majority"
+  "port": 3000,
+  "jwtSecret": "MasterTime is gay",
+  "mongoUri": "mongodb+srv://sasha:sasha@tramhack.ia0ba.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 }
