@@ -1,5 +1,5 @@
 {
-    "port": 3000,
-    "jwtSecret":"CHANGE_ME",
-    "mongoUri":"mongodb://localhost:27017/twichat"
+  "port": 3000,
+  "jwtSecret": "CHANGE_ME",
+  "mongoUri": "mongodb://localhost:27017/twichat"
 }
