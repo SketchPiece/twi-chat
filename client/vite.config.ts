@@ -18,7 +18,7 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: 'https://twilight-app.herokuapp.com',
+				target: 'http://localhost:4000',
 				changeOrigin: true,
 				secure: false,
 			},
