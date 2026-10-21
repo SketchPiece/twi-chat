@@ -1,5 +1,10 @@
 {
     "port": 5000,
-    "jwtSecret":"CHANGE_ME",
-    "mongoUri":"mongodb://localhost:27017/twichat"
+    "jwtSecret": "CHANGE_ME",
+    "mongoUri": "mongodb://localhost:27017/twichat",
+    "cloudinary": {
+        "cloudName": "",
+        "apiKey": "",
+        "apiSecret": ""
+    }
 }

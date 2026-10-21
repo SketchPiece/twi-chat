@@ -5,12 +5,12 @@ import Friend from './Friend';
 import { UserContext } from '../context/UserContext';
 import useKonami from 'react-use-konami';
 import { useHttp } from '../hooks/http.hook';
-import { getAvatarUrl } from '../scripts/extra'
+import { getAvatarUrl, CLOUDINARY_CLOUD_NAME } from '../scripts/extra'
 import {getTag} from '../scripts/extra'
 import FriendRequest from './FriendRequest';
 
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/CHANGE_ME/upload'
-const CLOUDINARY_UPLOAD_PRESET = 'CHANGE_ME'
+const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/upload`
+const CLOUDINARY_UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET
 
 export default function Profile({socket,setStatus,setAvatar,setEasterEgg,friends,requests}) {
     const {username,avatar,status,tag,userId} = useContext(UserContext)
@@ -54,11 +54,14 @@ export default function Profile({socket,setStatus,setAvatar,setEasterEgg,friends
     }
 
     const imageHandler = async e =>{
+        if(!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET) {
+            return alert('Avatar upload needs Cloudinary: set REACT_APP_CLOUDINARY_CLOUD_NAME and REACT_APP_CLOUDINARY_UPLOAD_PRESET in client/.env')
+        }
         let file = e.target.files[0]
         let formData = new FormData()
         formData.append('file',file)
         formData.append('upload_preset',CLOUDINARY_UPLOAD_PRESET)
-        setAvatarStatic(getAvatarUrl('v1581959183/levng698wjc23g8d5iua.gif',180))
+        setAvatarStatic('/images/loading.gif')
         try{
             const {data} = await requestFormData(CLOUDINARY_URL, 'POST', formData)
             let imageId = `v${data.version}/${data.public_id}.${data.format}`

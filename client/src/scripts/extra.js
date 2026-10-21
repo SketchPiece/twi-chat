@@ -26,12 +26,17 @@ export const ScrollTo = (to) => {
     container.scrollTo(0, to)
 }
 
+// Avatars are stored on Cloudinary. Set REACT_APP_CLOUDINARY_CLOUD_NAME in client/.env
+// to use it; without it every avatar falls back to the bundled default picture.
+export const CLOUDINARY_CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME
+
 export const getAvatarUrl = (id,scale) =>{
     if(!id) return '/images/load.gif'
+    if(!CLOUDINARY_CLOUD_NAME) return '/images/default.png'
     if(scale){
-        return `https://res.cloudinary.com/CHANGE_ME/image/upload/c_fill,h_${scale},w_${scale}/${id}`    
+        return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/c_fill,h_${scale},w_${scale}/${id}`    
     }
-    return `https://res.cloudinary.com/CHANGE_ME/image/upload/${id}`
+    return `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${id}`
 }
 
 export const getTag = (tag) => {

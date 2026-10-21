@@ -7,10 +7,14 @@ const FriendRequest = require('./models/FriendRequest')
 const Chat = require('./models/Chat')
 
 const cloudinary = require('cloudinary').v2
+// Cloudinary credentials come from config/ or env vars
+// (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET)
+const cloudinaryConfig = config.has('cloudinary') ? config.get('cloudinary') : {}
+const cloudinaryEnabled = !!(cloudinaryConfig.cloudName && cloudinaryConfig.apiKey && cloudinaryConfig.apiSecret)
 cloudinary.config({
-    cloud_name: 'CHANGE_ME',
-    api_key: 'CHANGE_ME',
-    api_secret: 'CHANGE_ME'
+    cloud_name: cloudinaryConfig.cloudName,
+    api_key: cloudinaryConfig.apiKey,
+    api_secret: cloudinaryConfig.apiSecret
 })
 
 
@@ -156,6 +160,7 @@ const socket = (server) => {
             user.save()
         })
         socket.on('delete_avatar', async ({avatar})=>{
+            if(!cloudinaryEnabled || !avatar) return
             let public_id = avatar.split('/')[1].split('.')[0]
             cloudinary.uploader.destroy(public_id);
         })

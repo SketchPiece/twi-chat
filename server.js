@@ -5,6 +5,10 @@ const mongoose = require('mongoose')
 const path = require('path')
 const PORT = process.env.PORT || config.get('port')
 
+if (config.get('jwtSecret') === 'CHANGE_ME') {
+  console.warn('Warning: jwtSecret is still CHANGE_ME. Set JWT_SECRET before running this anywhere public.')
+}
+
 const app = express()
 
 app.use(express.json({ extended: true }))
