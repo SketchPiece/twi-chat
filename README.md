@@ -1,8 +1,10 @@
-# TwiChat
+# TwiChat v0.8
+
+> This branch is v0.8, the React rewrite. The project grew into Twilight, which lives on [`master`](https://github.com/SketchPiece/twi-chat) together with the whole story.
 
 TwiChat is a real-time chat app I built between 2019 and 2021. It is the project I learned web development on. When I started it I had never written a backend or used a database, and most of what I know about Node.js, React, WebSockets and auth started here.
 
-It is not a polished product. It is a record of learning: the code changes style from one commit to the next, the commit messages are mostly in Russian, and you can watch bugs get fixed one by one. This repository has the whole history, and each early version lives on its own branch: [`v0.4`](https://github.com/SketchPiece/twi-chat/tree/v0.4), [`v0.5`](https://github.com/SketchPiece/twi-chat/tree/v0.5) and [`v0.6`](https://github.com/SketchPiece/twi-chat/tree/v0.6). `master` is the latest one.
+It is not a polished product. It is a record of learning: the code changes style from one commit to the next, the commit messages are mostly in Russian, and you can watch bugs get fixed one by one. This repository has the whole history, and each early version lives on its own branch: [`v0.4`](https://github.com/SketchPiece/twi-chat/tree/v0.4), [`v0.5`](https://github.com/SketchPiece/twi-chat/tree/v0.5) and [`v0.6`](https://github.com/SketchPiece/twi-chat/tree/v0.6). This branch is v0.8; the latest generation, Twilight, is on `master`.
 
 This is a pre-AI project. Everything here was written by hand, with documentation, Stack Overflow and a lot of trial and error.
 
@@ -16,7 +18,7 @@ This is a pre-AI project. Everything here was written by hand, with documentatio
 
 **v0.6 (July 2019), branch [`v0.6`](https://github.com/SketchPiece/twi-chat/tree/v0.6).** Still Express and EJS with jQuery and Bootstrap, now with friends, friend requests, direct messages and image uploads (GridFS, with Jimp for resizing).
 
-**v0.8 (February 2020 to 2021), `master`.** A full rewrite as a single-page app: React on the client, Express and Socket.io on the server, JWT instead of sessions, and Cloudinary for avatars. Released as "TwiChat v0.8 Beta" in February 2020 and deployed to Heroku. After that came bug fixes and, later, moving the database to a new host.
+**v0.8 (February 2020 to 2021), this branch.** A full rewrite as a single-page app: React on the client, Express and Socket.io on the server, JWT instead of sessions, and Cloudinary for avatars. Released as "TwiChat v0.8 Beta" in February 2020 and deployed to Heroku. After that came bug fixes and, later, moving the database to a new host.
 
 I also started a TypeScript rewrite (v0.9) in September 2020 but never got past the skeleton, so it is not included.
 
@@ -58,6 +60,7 @@ These dependencies are from 2020, so use **Node.js 16**. The old `config` packag
 ```bash
 git clone https://github.com/SketchPiece/twi-chat.git
 cd twi-chat
+git checkout v0.8
 npm install
 npm run client:install
 ```
