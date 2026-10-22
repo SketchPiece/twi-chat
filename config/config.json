@@ -11,7 +11,7 @@
     },
     "port": 3000,
     "session":{
-        "secret":"secret",
+        "secret":"CHANGE_ME",
         "key": "sid",
         "cookie":{
             "path": "/",
