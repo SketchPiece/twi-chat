@@ -20,7 +20,7 @@ I wrote it before AI coding tools existed. It is one of the projects I learned t
 - Swagger docs for the REST API and AsyncAPI docs for the socket events.
 - The client-side encryption, as a separate service with unit tests (see below).
 
-What is not finished: the client UI was never connected to the encryption service or the socket, so the pieces work on their own but not yet end to end in the browser. The mobile layout of the chat is also incomplete. In mid-2023 I started a rewrite on the T3 stack (Next.js, tRPC, Prisma, NextAuth). Only the scaffold was committed, on the `t3-rewrite` branch.
+What is not finished: the client UI was never connected to the encryption service or the socket, so the pieces work on their own but not yet end to end in the browser. The mobile layout of the chat is also incomplete. In mid-2023 I started a rewrite on the T3 stack (Next.js, tRPC, Prisma, NextAuth). It never got past the scaffold, so it is not included here.
 
 ## How the encryption works
 
