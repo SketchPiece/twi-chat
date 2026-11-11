@@ -22,7 +22,7 @@ Over the next month I added themes, profiles, avatars, friends, direct messages 
 
 ### A script in a message
 
-One day a guy from the server sent a chat message with a script inside it. I didn't sanitize anything, so the script ran for everyone who opened the chat. I had no idea that was even possible. I fixed it in my templates, and then I read that React escapes text on its own, which made me wonder what else I had missed.
+Right after the first version went up, a guy from the server sent a chat message with a script inside it. I didn't sanitize anything, so the script ran for everyone who opened the chat. I had no idea that was even possible. The next day [v0.4.3](https://github.com/SketchPiece/twi-chat/commit/5acb2d9) came out with two lines that replaced `<` and `>` in every message. Later I read that React escapes text on its own, which made me wonder what else I had missed.
 
 I was learning React around then, and I didn't get why people needed frameworks when plain JavaScript could do everything. At some point it clicked. Once I understood how React works, the things I had fought with in jQuery turned out to be simple.
 
