@@ -14,7 +14,7 @@ Everything here was written by hand, before AI coding tools.
 
 In 2019 I spent a lot of time on a Discord server for fans of My Little Pony. One of the people there, MasterTime, was making his own game, and one day he said, "You're a programmer, let's make a social network." I knew some Python and had taken a few C# lessons, but I had never made a website. I said yes anyway. I figured that if I could build a social network, I could build anything.
 
-So I googled "how to make websites". I watched screencasts, copied pieces from tutorials and bent them into what I needed. The first version that worked came together in one evening, on June 19, 2019. I called it TwiChat, after Twilight Sparkle.
+So I googled "how to make websites". I watched screencasts, copied pieces from tutorials and bent them into what I needed. The first version that worked came together in one evening in June 2019. I called it TwiChat, after Twilight Sparkle.
 
 The hardest part was WebSockets. I was trying to get a message from one browser to another in real time and tie it to logins and the database, and every step broke something. Many times I wanted to ask on Stack Overflow, but I was too shy. So I kept searching until I found someone who had hit the same problem, and I almost always did.
 
@@ -28,13 +28,13 @@ I was learning React around then, and I didn't get why people needed frameworks 
 
 ### Ten days in February
 
-In February 2020 I rewrote TwiChat from scratch in React. It took ten days, from February 9 to the "TwiChat v0.8 Beta" release on February 19. I worked through the nights and fell asleep wanting to wake up and finish whatever I was in the middle of. My school friend Sasha ([Alexander Serhiienko](https://github.com/AlexanderSerhiienko)), who was learning to program with me, moved the colors into themes and made the light one.
+In February 2020 I rewrote TwiChat from scratch in React. It took ten days to get to the "TwiChat v0.8 Beta" release. I worked through the nights and fell asleep wanting to wake up and finish whatever I was in the middle of. My school friend Sasha ([Alexander Serhiienko](https://github.com/AlexanderSerhiienko)), who was learning to program with me, moved the colors into themes and made the light one.
 
 | Direct messages | Light theme | Login |
 | --- | --- | --- |
 | ![Direct messages](https://github.com/SketchPiece/twi-chat/raw/v0.8/docs/dark-direct.png) | ![Light theme](https://github.com/SketchPiece/twi-chat/raw/v0.8/docs/light-chat.png) | ![Login](https://github.com/SketchPiece/twi-chat/raw/v0.8/docs/dark-login.png) |
 
-After the release I spent a couple of weeks fixing bugs, the worst of them in the sockets. But the server never really moved to TwiChat, and it turned into my own playground for trying new things. In September 2020 I started a TypeScript version and dropped it, because that October I got my first job as a developer.
+After the release I spent a couple of weeks fixing bugs, the worst of them in the sockets. But the server never really moved to TwiChat, and it turned into my own playground for trying new things. Later that year I started a TypeScript version and dropped it, because I got my first job as a developer.
 
 ### Twilight
 
