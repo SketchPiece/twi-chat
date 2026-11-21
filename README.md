@@ -20,6 +20,10 @@ The hardest part was WebSockets. I was trying to get a message from one browser 
 
 Over the next month I added themes, profiles, avatars, friends, direct messages and pictures. People from the server came in to try it. The best part was showing each new thing to MasterTime, who was always amazed, and that kept me going.
 
+| v0.4, June 2019 | v0.6, July 2019 |
+| --- | --- |
+| ![TwiChat v0.4](https://github.com/SketchPiece/twi-chat/raw/v0.4/docs/chat.png) | ![TwiChat v0.6](https://github.com/SketchPiece/twi-chat/raw/v0.6/docs/direct.png) |
+
 ### Why I switched to React
 
 Right after the first version went up, a guy from the server sent a chat message with a script inside it. I didn't sanitize anything, so the script ran for everyone who opened the chat. I had no idea that was even possible. The next day [v0.4.3](https://github.com/SketchPiece/twi-chat/commit/5acb2d9) came out with two lines that replaced `<` and `>` in every message. Later I read that React escapes text on its own, which made me wonder what else I had missed.
