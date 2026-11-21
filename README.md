@@ -2,7 +2,11 @@
 
 Late June 2019. Light and dark styles, user profiles, and avatar uploads stored in MongoDB GridFS.
 
-![Chat](docs/chat.png)
+| Chat | Profile |
+| --- | --- |
+| ![Chat](docs/chat.png) | ![Profile](docs/profile.png) |
+
+The theme switch is on the profile page, Princess Celestia for light and Princess Luna for dark. The question above it is a joke I left in back then.
 
 *Screenshots taken in 2026 by running this branch locally on Node 16 and MongoDB 6, with made-up users. The pony avatar is the default one the app gave everyone.*
 
