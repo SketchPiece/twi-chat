@@ -38,7 +38,7 @@ After the release I spent a couple of weeks fixing bugs, the worst of them in th
 
 ### Coming back as Twilight
 
-In the summer of 2022 I had just left my second job, and I wanted to bring TwiChat back. It was the project that made me a developer, so I wanted to rebuild it properly with everything I had learned at work. This time it would be a messenger, closer to Telegram than to a social network, and the messages would be end-to-end encrypted so the server could never read them. I called it Twilight. It sounded better than TwiChat and still pointed to the same pony.
+In the summer of 2022 I had just left my second job, and I wanted to bring TwiChat back. It was the project that made me a developer, so I wanted to rebuild it properly with everything I had learned at work. This time it would be a messenger, closer to Telegram than to a social network, and the messages would be end-to-end encrypted so the server could never read them. I called it Twilight. It sounded better than TwiChat and felt more like a real brand.
 
 By then Sasha was working as a developer too, and we tried to run it like a real team. We planned tasks in Trello, he did the frontend, I did the backend, and we reviewed each other's pull requests. In three weeks we had sign-up with refresh tokens, user search, direct chats over Socket.io, API docs, tests, CI and an encryption service on the client.
 
