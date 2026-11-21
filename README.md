@@ -10,7 +10,7 @@ Everything here was written by hand, before AI coding tools.
 
 ## The story
 
-### A chat for a pony server
+### A dare on a pony server
 
 In 2019 I spent a lot of time on a Discord server for fans of My Little Pony. One of the people there, MasterTime, was making his own game, and one day he said, "You're a programmer, let's make a social network." I knew some Python and had taken a few C# lessons, but I had never made a website. I said yes anyway. I figured that if I could build a social network, I could build anything.
 
