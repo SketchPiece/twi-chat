@@ -4,9 +4,9 @@
 
 TwiChat is a real-time chat app I built between 2019 and 2021. It is the project I learned web development on. When I started it I had never written a backend or used a database, and most of what I know about Node.js, React, WebSockets and auth started here.
 
-It is not a polished product. It is a record of learning: the code changes style from one commit to the next, the commit messages are mostly in Russian, and you can watch bugs get fixed one by one. This repository has the whole history, and each early version lives on its own branch: [`v0.4`](https://github.com/SketchPiece/twi-chat/tree/v0.4), [`v0.5`](https://github.com/SketchPiece/twi-chat/tree/v0.5) and [`v0.6`](https://github.com/SketchPiece/twi-chat/tree/v0.6). This branch is v0.8; the latest generation, Twilight, is on `master`.
+The code is messy and changes style from one commit to the next, the commit messages are mostly in Russian, and you can watch bugs get fixed one by one. Each early version lives on its own branch: [`v0.4`](https://github.com/SketchPiece/twi-chat/tree/v0.4), [`v0.5`](https://github.com/SketchPiece/twi-chat/tree/v0.5) and [`v0.6`](https://github.com/SketchPiece/twi-chat/tree/v0.6). This branch is v0.8; the latest version, Twilight, is on `master`.
 
-This is a pre-AI project. Everything here was written by hand, with documentation, Stack Overflow and a lot of trial and error.
+Everything here was written by hand, before AI coding tools.
 
 ![Community chat, dark theme](docs/dark-chat.png)
 
